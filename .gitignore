@@ -1,0 +1,12 @@
+﻿# Local ignores for VS680 Mux HTL
+**/__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+**/.env
+**/*credentials.local*
+tool/_mux_run_*.txt
+tool/with-qgc/_qgc_mux.ini
+
