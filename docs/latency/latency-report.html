@@ -25,6 +25,21 @@
     --pend-bg: #fef3c7;
     --sans: "Noto Sans TC", "Microsoft JhengHei", "Segoe UI", system-ui, sans-serif;
     --mono: "Cascadia Mono", Consolas, "Courier New", monospace;
+    --src-pub: #fef3c7;
+    --src-pub-bd: #f59e0b;
+    --src-pub-ink: #92400e;
+    --src-mux: #dcfce7;
+    --src-mux-bd: #16a34a;
+    --src-mux-ink: #14532d;
+    --src-qgc: #dbeafe;
+    --src-qgc-bd: #2563eb;
+    --src-qgc-ink: #1e3a8a;
+    --src-eth: #ccfbf1;
+    --src-eth-bd: #0d9488;
+    --src-eth-ink: #115e59;
+    --src-soft: #f1f5f9;
+    --src-soft-bd: #64748b;
+    --src-soft-ink: #334155;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -225,6 +240,96 @@
   table.data.ref th { font-size: 7.5pt; }
   table.data.ref td { font-size: 7.5pt; padding: 4px 6px; }
   table.data.ref .src { font-size: 6.5pt; color: var(--muted); }
+
+  /* Source-colored rows (pair with text badge — not color alone) */
+  .src-legend {
+    display: flex; flex-wrap: wrap; gap: 6px 10px;
+    font-size: 7.5pt; margin: 0 0 6px; align-items: center;
+  }
+  .src-legend .chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 2px 7px; border-radius: 999px;
+    border: 1px solid; font-weight: 700;
+  }
+  .chip.pub  { background: var(--src-pub);  border-color: var(--src-pub-bd);  color: var(--src-pub-ink); }
+  .chip.mux  { background: var(--src-mux);  border-color: var(--src-mux-bd);  color: var(--src-mux-ink); }
+  .chip.qgc  { background: var(--src-qgc);  border-color: var(--src-qgc-bd);  color: var(--src-qgc-ink); }
+  .chip.eth  { background: var(--src-eth);  border-color: var(--src-eth-bd);  color: var(--src-eth-ink); }
+  .chip.soft { background: var(--src-soft); border-color: var(--src-soft-bd); color: var(--src-soft-ink); }
+  .swatch-src {
+    width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0;
+    border: 1px solid rgba(0,0,0,.12);
+  }
+  table.data.ref tr.src-pub  td { background: var(--src-pub); }
+  table.data.ref tr.src-mux  td { background: var(--src-mux); }
+  table.data.ref tr.src-qgc  td { background: var(--src-qgc); }
+  table.data.ref tr.src-eth  td { background: var(--src-eth); }
+  table.data.ref tr.src-soft td { background: var(--src-soft); }
+  table.data.ref tr.src-mux  td:first-child { box-shadow: inset 3px 0 0 var(--src-mux-bd); }
+  table.data.ref tr.src-pub  td:first-child { box-shadow: inset 3px 0 0 var(--src-pub-bd); }
+  table.data.ref tr.src-qgc  td:first-child { box-shadow: inset 3px 0 0 var(--src-qgc-bd); }
+  table.data.ref tr.src-eth  td:first-child { box-shadow: inset 3px 0 0 var(--src-eth-bd); }
+  table.data.ref tr.src-soft td:first-child { box-shadow: inset 3px 0 0 var(--src-soft-bd); }
+  .src-tag {
+    display: inline-block; font-size: 6.5pt; font-weight: 800;
+    padding: 1px 5px; border-radius: 3px; border: 1px solid;
+    letter-spacing: .02em; white-space: nowrap;
+  }
+  .src-tag.pub  { background: #fffbeb; border-color: var(--src-pub-bd);  color: var(--src-pub-ink); }
+  .src-tag.mux  { background: #f0fdf4; border-color: var(--src-mux-bd);  color: var(--src-mux-ink); }
+  .src-tag.qgc  { background: #eff6ff; border-color: var(--src-qgc-bd);  color: var(--src-qgc-ink); }
+  .src-tag.eth  { background: #f0fdfa; border-color: var(--src-eth-bd);  color: var(--src-eth-ink); }
+  .src-tag.soft { background: #fff;    border-color: var(--src-soft-bd); color: var(--src-soft-ink); }
+
+  .viz-calc {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 8px;
+    margin: 0 0 10px;
+  }
+  .viz-card {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #f8fafc;
+    padding: 8px 8px 6px;
+  }
+  .viz-card .vlbl {
+    font-size: 7pt; font-weight: 700; color: var(--muted);
+    letter-spacing: .04em; text-transform: uppercase; margin-bottom: 6px;
+  }
+  .viz-flow {
+    display: flex; align-items: center; justify-content: center;
+    gap: 4px; flex-wrap: wrap;
+  }
+  .viz-node {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    min-width: 52px; padding: 4px 6px;
+    border-radius: 8px; border: 1.5px solid var(--line); background: #fff;
+  }
+  .viz-node svg { width: 26px; height: 26px; color: var(--d1); }
+  .viz-node .t { font-size: 8pt; font-weight: 800; font-family: var(--mono); }
+  .viz-node .s { font-size: 6pt; color: var(--muted); text-align: center; line-height: 1.15; }
+  .viz-op {
+    font-size: 14pt; font-weight: 800; color: var(--muted); padding: 0 2px;
+  }
+  .viz-result {
+    border-color: var(--pass); background: var(--pass-bg); color: var(--pass);
+  }
+  .viz-result svg { color: var(--pass); }
+  .pct-svg { width: 100%; height: 56px; display: block; }
+  .viz-modes {
+    display: flex; gap: 6px; margin-top: 6px;
+  }
+  .viz-mode {
+    flex: 1; text-align: center; padding: 5px 4px;
+    border-radius: 6px; border: 1px solid var(--line); background: #fff;
+  }
+  .viz-mode svg { display: block; margin: 0 auto; color: var(--d1); }
+  .viz-mode .nm { font-size: 7.5pt; font-weight: 800; margin-top: 2px; }
+  .viz-mode .ds { font-size: 6pt; color: var(--muted); }
+  @media print {
+    .viz-calc { break-inside: avoid; }
+  }
   .road.now { border-color: var(--d2); background: var(--d2-bg); }
   .road.tgt { border-color: #6366f1; background: #eef2ff; }
   .road .lbl {
@@ -330,7 +435,8 @@
   .warn-strip svg { width: 22px; height: 22px; flex-shrink: 0; }
 
   .note-strip {
-    display: flex; align-items: center; justify-content: center; gap: 8px;
+    display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+    gap: 6px;
     padding: 8px; border-radius: 8px;
     background: var(--d2-bg); border: 1px solid var(--d2-border);
     margin-bottom: 10px; font-size: 8.5pt; font-weight: 600; color: var(--d2);
@@ -542,6 +648,14 @@
     <path d="M14 20h20M34 20l-5-5M34 20l-5 5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M34 28H14M14 28l5-5M14 28l5 5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
   </symbol>
+  <symbol id="i-delta" viewBox="0 0 48 48">
+    <path d="M24 10L40 38H8Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M18 30h12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="i-sort" viewBox="0 0 48 48">
+    <path d="M12 14h18M12 24h12M12 34h22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M36 12v24M32 32l4 6 4-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
 </svg>
 
 <!-- ===================== PAGE 1 · Overall data flow ===================== -->
@@ -666,8 +780,11 @@
 
   <div class="note-strip">
     <svg width="20" height="20" aria-hidden="true"><use href="#i-clock"/></svg>
-    主指標 L_cmd＝T1−T0（getevent ↔ mux -L，同 CLOCK_MONOTONIC）· eth 跳 &lt;1 ms ·
-    基線 n=1000 P50 5.3／P95 56.2 · 重測 18:05 n=846 P50 5.1／P95 40.9 ms
+    <span class="mono">L_cmd = T1−T0</span>
+    <span>·</span>
+    <span>基線 P50 5.3／P95 56.2</span>
+    <span>·</span>
+    <span>重測 P50 5.1／P95 40.9</span>
   </div>
 
   <div class="p1-tables">
@@ -726,6 +843,59 @@
     <span class="ok">基線 n=1000 P50 5.3 / P95 56.2 ms</span>
     <span class="ok">重測 n=846 P50 5.1 / P95 40.9 ms</span>
     <span class="wait">L_telem_qgc Pending</span>
+  </div>
+
+  <div class="viz-calc" aria-label="指標計算圖示">
+    <div class="viz-card">
+      <div class="vlbl">L_cmd</div>
+      <div class="viz-flow">
+        <div class="viz-node">
+          <svg><use href="#i-gamepad"/></svg>
+          <div class="t">T0</div>
+          <div class="s">HID</div>
+        </div>
+        <span class="viz-op">→</span>
+        <div class="viz-node">
+          <svg><use href="#i-board"/></svg>
+          <div class="t">T1</div>
+          <div class="s">mux send</div>
+        </div>
+        <span class="viz-op">=</span>
+        <div class="viz-node viz-result">
+          <svg><use href="#i-delta"/></svg>
+          <div class="t">Δms</div>
+          <div class="s">T1−T0</div>
+        </div>
+      </div>
+      <div class="viz-modes">
+        <div class="viz-mode">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h3l2-4 3 8 3-6 2 2h7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="nm">dense</div>
+          <div class="ds">每包 MC</div>
+        </div>
+        <div class="viz-mode">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16V8l8 4-8 4zm10-8v16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="18" cy="8" r="2" fill="currentColor"/></svg>
+          <div class="nm">edge</div>
+          <div class="ds">猛推首包</div>
+        </div>
+      </div>
+    </div>
+    <div class="viz-card">
+      <div class="vlbl">P50 / P95</div>
+      <svg class="pct-svg" viewBox="0 0 280 56" xmlns="http://www.w3.org/2000/svg" aria-label="P50 中位、P95 尾端">
+        <rect x="10" y="28" width="260" height="10" rx="5" fill="#e2e8f0"/>
+        <rect x="10" y="28" width="130" height="10" rx="5" fill="#86efac"/>
+        <rect x="140" y="28" width="107" height="10" fill="#93c5fd"/>
+        <rect x="247" y="28" width="23" height="10" rx="0 5 5 0" fill="#fcd34d"/>
+        <line x1="140" y1="18" x2="140" y2="44" stroke="#166534" stroke-width="2"/>
+        <line x1="247" y1="18" x2="247" y2="44" stroke="#b45309" stroke-width="2"/>
+        <text x="140" y="14" text-anchor="middle" font-size="10" font-weight="700" fill="#166534">P50</text>
+        <text x="247" y="14" text-anchor="middle" font-size="10" font-weight="700" fill="#b45309">P95</text>
+        <text x="70" y="52" text-anchor="middle" font-size="8" fill="#64748b">一半較快</text>
+        <text x="195" y="52" text-anchor="middle" font-size="8" fill="#64748b">多數</text>
+        <text x="262" y="52" text-anchor="middle" font-size="8" fill="#92400e">尾 5%</text>
+      </svg>
+    </div>
   </div>
 
   <div class="facts-row">
@@ -855,78 +1025,96 @@
   <div class="ref-note">
     公開數字多為 RF「搖桿→接收機→飛控」；本報告 Now 為「HID→mavlink_mux→eth」。路徑不同，僅作數量級／Target 參考。
   </div>
+  <div class="src-legend" aria-label="來源色碼">
+    <span class="chip pub"><i class="swatch-src" style="background:var(--src-pub-bd)"></i>公開參考（RF）</span>
+    <span class="chip mux"><i class="swatch-src" style="background:var(--src-mux-bd)"></i>mux 實測</span>
+    <span class="chip qgc"><i class="swatch-src" style="background:var(--src-qgc-bd)"></i>QGC 歷史</span>
+    <span class="chip eth"><i class="swatch-src" style="background:var(--src-eth-bd)"></i>eth 來回</span>
+    <span class="chip soft"><i class="swatch-src" style="background:var(--src-soft-bd)"></i>mux 軟體週期</span>
+  </div>
   <table class="data ref compact">
     <tr>
+      <th>來源</th>
       <th>類別</th>
       <th>路徑</th>
       <th>典型延遲</th>
       <th>對應本報告</th>
       <th>用途</th>
     </tr>
-    <tr>
+    <tr class="src-pub">
+      <td><span class="src-tag pub">公開</span></td>
       <td>ELRS 500–1000 Hz</td>
       <td>RF 下行 stick→FC</td>
       <td class="mono">≈1.5–4 ms</td>
       <td>未來 Baseline-Product 控鏈</td>
       <td>競速／低延遲目標</td>
     </tr>
-    <tr>
+    <tr class="src-pub">
+      <td><span class="src-tag pub">公開</span></td>
       <td>ELRS 250 Hz／Tracer／Ghost</td>
       <td>RF 下行</td>
       <td class="mono">≈4–10 ms</td>
       <td>同上</td>
       <td>一般 FPV 手感</td>
     </tr>
-    <tr>
+    <tr class="src-pub">
+      <td><span class="src-tag pub">公開</span></td>
       <td>Crossfire 150 Hz</td>
       <td>RF 下行</td>
       <td class="mono">≈8–15 ms</td>
       <td>同上</td>
       <td>長距 RF 常見</td>
     </tr>
-    <tr>
+    <tr class="src-pub">
+      <td><span class="src-tag pub">公開</span></td>
       <td>ELRS／CF 長距 50 Hz</td>
       <td>RF 下行</td>
       <td class="mono">≈18–22 ms</td>
       <td>同上</td>
       <td>遠距可接受</td>
     </tr>
-    <tr>
-      <td><strong>本次 Mux-Eth-HTL</strong></td>
-      <td>HID→mux→eth（dense 基線）</td>
+    <tr class="src-mux">
+      <td><span class="src-tag mux">mux</span></td>
+      <td><strong>Mux-Eth-HTL 基線</strong></td>
+      <td>HID→mux→eth（dense）</td>
       <td class="mono"><strong>P50 5.3 / P95 56.2 ms</strong></td>
       <td class="mono">L_cmd n=1000</td>
       <td>正式基線 · latency-mux-n1000-latest</td>
     </tr>
-    <tr>
-      <td><strong>重測 Mux-Eth-HTL</strong></td>
+    <tr class="src-mux">
+      <td><span class="src-tag mux">mux</span></td>
+      <td><strong>Mux-Eth-HTL 重測</strong></td>
       <td>HID→mux→eth（dense 18:05）</td>
       <td class="mono"><strong>P50 5.1 / P95 40.9 ms</strong></td>
       <td class="mono">L_cmd n=846 · mean 10.8</td>
       <td>2026-07-31 晚間重跑確認</td>
     </tr>
-    <tr>
-      <td><strong>本次 Mux-Eth-HTL</strong></td>
+    <tr class="src-mux">
+      <td><span class="src-tag mux">mux</span></td>
+      <td><strong>Mux-Eth-HTL edge</strong></td>
       <td>HID edge→mux send</td>
       <td class="mono"><strong>P50 8.7 / P95 17.9 ms</strong></td>
       <td class="mono">L_cmd_edge n=22</td>
       <td>猛推邊緣對齊</td>
     </tr>
-    <tr>
+    <tr class="src-qgc">
+      <td><span class="src-tag qgc">QGC</span></td>
       <td>歷史 QGC 路徑</td>
       <td>HID→QGC→eth MC</td>
       <td class="mono">P50 97.6 / P95 310.9 ms</td>
       <td class="mono">L_cmd_board（舊）</td>
       <td>對照用；非現行</td>
     </tr>
-    <tr>
+    <tr class="src-eth">
+      <td><span class="src-tag eth">eth</span></td>
       <td>歷史 Eth-HTL</td>
       <td>MC 出→ATTITUDE 回</td>
       <td class="mono">P50 59.3 / P95 98.4 ms</td>
       <td class="mono">L_rtt*</td>
       <td>含遙測週期≈10 Hz</td>
     </tr>
-    <tr>
+    <tr class="src-soft">
+      <td><span class="src-tag soft">軟體</span></td>
       <td>mux 送杆週期</td>
       <td>軟體 50 Hz</td>
       <td class="mono">≈20 ms 上限</td>
@@ -986,7 +1174,15 @@
 
   <div class="note-strip">
     <svg width="22" height="22"><use href="#i-clock"/></svg>
-    同板 CLOCK_MONOTONIC · getevent -lt ↔ mux -L · 勿用 /proc/uptime 對齊（boottime 會灌水）
+    <span class="mono">CLOCK_MONOTONIC</span>
+    <span>·</span>
+    <svg width="18" height="18" style="color:var(--d1)"><use href="#i-gamepad"/></svg>
+    <span class="mono">getevent</span>
+    <span>↔</span>
+    <svg width="18" height="18" style="color:var(--d1)"><use href="#i-board"/></svg>
+    <span class="mono">mux -L</span>
+    <span>·</span>
+    <span style="color:var(--pend);font-weight:700">≠ uptime sync</span>
   </div>
 
   <div class="timing">
@@ -1004,6 +1200,50 @@
         <div class="tnode"><span class="tn">T2'</span><span class="td">eth0 入 ATTITUDE</span></div>
         <div class="tdown">↓</div>
         <div class="tnode"><span class="tn">T3'</span><span class="td">QGC 畫面更新</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="viz-calc" aria-label="D1 計算圖示">
+    <div class="viz-card">
+      <div class="vlbl">配對</div>
+      <div class="viz-flow">
+        <div class="viz-node">
+          <svg><use href="#i-board"/></svg>
+          <div class="t">MC</div>
+          <div class="s">mux 離中</div>
+        </div>
+        <span class="viz-op">↔</span>
+        <div class="viz-node">
+          <svg><use href="#i-gamepad"/></svg>
+          <div class="t">HID</div>
+          <div class="s">≤T1 最近</div>
+        </div>
+        <span class="viz-op">→</span>
+        <div class="viz-node viz-result">
+          <svg><use href="#i-delta"/></svg>
+          <div class="t">L_cmd</div>
+          <div class="s">ms</div>
+        </div>
+      </div>
+    </div>
+    <div class="viz-card">
+      <div class="vlbl">分位</div>
+      <div class="viz-flow">
+        <div class="viz-node">
+          <svg><use href="#i-sort"/></svg>
+          <div class="t">sort</div>
+          <div class="s">全部樣本</div>
+        </div>
+        <span class="viz-op">→</span>
+        <div class="viz-node viz-result" style="border-color:#166534;background:#dcfce7;color:#166534">
+          <div class="t">P50</div>
+          <div class="s">50%</div>
+        </div>
+        <div class="viz-node" style="border-color:#b45309;background:#fffbeb;color:#92400e">
+          <div class="t">P95</div>
+          <div class="s">95%</div>
+        </div>
       </div>
     </div>
   </div>
