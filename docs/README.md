@@ -26,6 +26,7 @@
 
 | 目錄 | 說明 |
 |------|------|
-| [`../test/evidence/mux-path/dense-n1000/latency-mux-n1000-latest/`](../test/evidence/mux-path/dense-n1000/latency-mux-n1000-latest/) | **現行** dense n=1000（P50 5.3 / P95 56.2 ms） |
+| [`../test/evidence/mux-path/dense-n1000/latency-mux-n1000-latest/`](../test/evidence/mux-path/dense-n1000/latency-mux-n1000-latest/) | **基線** dense n=1000（P50 5.3 / P95 56.2 ms） |
+| [`../test/evidence/mux-path/dense-n1000/latency-mux-n1000-20260731-180536/`](../test/evidence/mux-path/dense-n1000/latency-mux-n1000-20260731-180536/) | **重測** dense n=846（P50 5.1 / P95 40.9 ms） |
 | [`../test/evidence/mux-path/dense-n1000/`](../test/evidence/mux-path/dense-n1000/) | dense 歷次 run |
 | [`../test/evidence/mux-path/edge/`](../test/evidence/mux-path/edge/) | edge／早期 run |

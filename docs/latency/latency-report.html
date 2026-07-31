@@ -549,7 +549,7 @@
   <header class="page-header">
     <div>
       <h1>整體資料流 · 通訊延遲</h1>
-      <div class="sub">搖桿 → mux → FC · QGC 指令／遙測 · VS680 ↔ Godwit · Baseline-Mux-Eth-HTL · 2026-07-31</div>
+      <div class="sub">搖桿 → mux → FC · QGC 指令／遙測 · VS680 ↔ Godwit · Baseline-Mux-Eth-HTL · 2026-07-31（含晚間重測）</div>
     </div>
     <div class="legend">
       <span><i class="swatch d1"></i> D1 VS680 / mux</span>
@@ -560,6 +560,7 @@
   <div class="badges">
     <span class="badge pass">eth 通訊 Pass</span>
     <span class="badge pass">L_cmd n=1000 Done</span>
+    <span class="badge pass">重測 n=846 · P50 5.1 ms</span>
     <span class="badge lab">Baseline-Mux-Eth-HTL</span>
   </div>
 
@@ -665,7 +666,8 @@
 
   <div class="note-strip">
     <svg width="20" height="20" aria-hidden="true"><use href="#i-clock"/></svg>
-    主指標 L_cmd＝T1−T0（getevent ↔ mux -L，同 CLOCK_MONOTONIC）· eth 跳 &lt;1 ms
+    主指標 L_cmd＝T1−T0（getevent ↔ mux -L，同 CLOCK_MONOTONIC）· eth 跳 &lt;1 ms ·
+    基線 n=1000 P50 5.3／P95 56.2 · 重測 18:05 n=846 P50 5.1／P95 40.9 ms
   </div>
 
   <div class="p1-tables">
@@ -695,9 +697,14 @@
       <table class="data compact">
         <tr><th>指標</th><th>定義</th><th>P50</th><th>狀態</th></tr>
         <tr>
-          <td class="mono">L_cmd</td><td>T1−T0 dense</td>
+          <td class="mono">L_cmd</td><td>T1−T0 dense 基線</td>
           <td class="mono">5.3 ms</td>
           <td><span class="badge pass">n=1000</span></td>
+        </tr>
+        <tr>
+          <td class="mono">L_cmd</td><td>T1−T0 dense 重測</td>
+          <td class="mono">5.1 ms</td>
+          <td><span class="badge pass">n=846</span></td>
         </tr>
         <tr>
           <td class="mono">L_cmd_edge</td><td>T1−T0 edge</td>
@@ -716,7 +723,8 @@
   <div class="status-strip">
     <span class="ok">eth 雙向 UDP Pass</span>
     <span class="ok">mux 注入 RC/MC Pass</span>
-    <span class="ok">L_cmd n=1000 P50 5.3 / P95 56.2 ms</span>
+    <span class="ok">基線 n=1000 P50 5.3 / P95 56.2 ms</span>
+    <span class="ok">重測 n=846 P50 5.1 / P95 40.9 ms</span>
     <span class="wait">L_telem_qgc Pending</span>
   </div>
 
@@ -756,7 +764,7 @@
 
   <div class="badges">
     <span class="badge lab">Baseline-Mux-Eth-HTL</span>
-    <span class="badge pass">L_cmd n=1000</span>
+    <span class="badge pass">L_cmd n=1000 · 重測 n=846</span>
     <span class="badge pend">Target RF 未達</span>
   </div>
 
@@ -885,10 +893,17 @@
     </tr>
     <tr>
       <td><strong>本次 Mux-Eth-HTL</strong></td>
-      <td>HID→mux→eth（dense）</td>
+      <td>HID→mux→eth（dense 基線）</td>
       <td class="mono"><strong>P50 5.3 / P95 56.2 ms</strong></td>
       <td class="mono">L_cmd n=1000</td>
-      <td>現行搖桿注入路徑</td>
+      <td>正式基線 · latency-mux-n1000-latest</td>
+    </tr>
+    <tr>
+      <td><strong>重測 Mux-Eth-HTL</strong></td>
+      <td>HID→mux→eth（dense 18:05）</td>
+      <td class="mono"><strong>P50 5.1 / P95 40.9 ms</strong></td>
+      <td class="mono">L_cmd n=846 · mean 10.8</td>
+      <td>2026-07-31 晚間重跑確認</td>
     </tr>
     <tr>
       <td><strong>本次 Mux-Eth-HTL</strong></td>
@@ -921,7 +936,8 @@
   </table>
   <p class="src" style="font-size:6.5pt;color:var(--muted);margin:2px 0 0">
     參考：UAVMODEL RC Link Latency 2026；YoHoRC radio protocol；The Flying Emu FPV latency；
-    QGC Joystick Axis Frequency。Evidence：test/evidence/mux-path/dense-n1000/latency-mux-n1000-latest/ · mux-path/edge/ ·（QGC 歷史對照見姊妹專案 qgc-path）
+    QGC Joystick Axis Frequency。Evidence：test/evidence/mux-path/dense-n1000/latency-mux-n1000-latest/
+    （基線）· latency-mux-n1000-20260731-180536/（重測）· mux-path/edge/ ·（QGC 歷史對照見姊妹專案 qgc-path）
   </p>
 
   <footer class="page-footer">
@@ -996,9 +1012,15 @@
     <tr><th>指標</th><th>定義</th><th>P50</th><th>P95</th><th>狀態</th></tr>
     <tr>
       <td class="mono">L_cmd</td>
-      <td>dense：每 MC ↔ 最近 EV_ABS</td>
+      <td>dense：每 MC ↔ 最近 EV_ABS（基線）</td>
       <td class="mono">5.3</td><td class="mono">56.2</td>
       <td><span class="badge pass">n=1000</span></td>
+    </tr>
+    <tr>
+      <td class="mono">L_cmd</td>
+      <td>dense 重測 2026-07-31 18:05（mean 10.8）</td>
+      <td class="mono">5.1</td><td class="mono">40.9</td>
+      <td><span class="badge pass">n=846</span></td>
     </tr>
     <tr>
       <td class="mono">L_cmd_edge</td>
@@ -1040,12 +1062,12 @@
     <div class="pitem">
       <svg style="color:var(--pass)"><use href="#i-clock"/></svg>
       統計
-      <div class="cmd">n=1000 · P50/P95</div>
+      <div class="cmd">n=1000／846 · P50/P95</div>
     </div>
   </div>
 
   <footer class="page-footer">
-    <span>VS680 ↔ 無人機 · Baseline-Mux-Eth-HTL · evidence/latency-mux-n1000-latest</span>
+    <span>VS680 ↔ 無人機 · Baseline-Mux-Eth-HTL · mux-path/dense-n1000/</span>
     <span>頁 3 / 4</span>
   </footer>
 </section>

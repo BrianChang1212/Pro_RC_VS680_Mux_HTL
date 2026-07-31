@@ -8,7 +8,7 @@
 
 - eth0 ↔ Godwit HTL：**Pass**
 - 系統 mux 搖桿注入：**Pass**
-- 延遲 L_cmd dense n=1000 · P50 **5.3 ms**／P95 **56.2 ms**
+- 延遲 L_cmd dense：基線 n=1000 · P50 **5.3**／P95 **56.2** ms；重測 n=846 · P50 **5.1**／P95 **40.9** ms
 
 ## 與姊妹專案分工
 

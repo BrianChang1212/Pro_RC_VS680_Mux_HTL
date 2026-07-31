@@ -33,5 +33,6 @@
 - Report: `docs/latency/latency-report.html` (**Baseline-Mux-Eth-HTL**)
 
 ## Related
-- Edge-style (n=22): `../latency-mux-20260731-171328/` · P50 8.7 / P95 17.9 ms
-- Historical QGC path: `../20260731-latency-eth-htl/` · P50 97.6 ms（對照，非現行）
+- Edge-style (n=22): `../../edge/latency-mux-20260731-171328/` · P50 8.7 / P95 17.9 ms
+- Retest 2026-07-31 18:05: `../latency-mux-n1000-20260731-180536/` · n=846 · P50 **5.12** / P95 **40.89** ms（mean 10.83）
+- Historical QGC path: 姊妹專案 `qgc-path/20260731-latency-eth-htl/` · P50 97.6 ms（對照）
