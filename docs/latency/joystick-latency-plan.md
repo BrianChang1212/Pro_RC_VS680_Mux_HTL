@@ -2,7 +2,7 @@
 
 > 狀態：**Done（鏈路延遲）** — 2026-07-31 · Baseline-Mux-Eth-HTL  
 > 報告：[`latency-report.html`](latency-report.html)  
-> Evidence：[`../test/evidence/latency-mux-n1000-latest/`](../test/evidence/latency-mux-n1000-latest/)
+> Evidence：[`../../test/evidence/mux-path/dense-n1000/latency-mux-n1000-latest/`](../../test/evidence/mux-path/dense-n1000/latency-mux-n1000-latest/)
 
 ## 目標
 

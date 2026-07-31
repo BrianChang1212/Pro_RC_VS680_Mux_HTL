@@ -3,7 +3,7 @@
 > **日期**：2026-07-31  
 > **來源**：專案 bring-up 文件 + session 討論整理（進度確認、遠端同步、通訊機制釐清）  
 > **DUT**：VS680 `83bc469a34914114` · Godwit HTL · `AcctonGodwit_GA1`  
-> **SSOT 操作**：[`操作手冊-RealDrone-USB.md`](操作手冊-RealDrone-USB.md) · 一鍵 [`../tool/bring-up/setup-eth-htl.ps1`](../tool/bring-up/setup-eth-htl.ps1)
+> **SSOT 操作**：[`../mux/操作手冊-Mux-HTL.md`](../mux/操作手冊-Mux-HTL.md) · 一鍵 [`../../tool/start-with-qgc.ps1`](../../tool/start-with-qgc.ps1) / eth [`../../tool/bring-up/setup-eth-htl.ps1`](../../tool/bring-up/setup-eth-htl.ps1)
 
 ---
 
@@ -14,7 +14,7 @@
 | **唯一支援資料路徑** | VS680 **eth0** ↔ FC **Ethernet** · MAVLink **UDP :14550**（經 **`mavlink_mux`**） |
 | **通訊驗證** | **Pass**（2026-07-30 eth HTL；見 [`verification-eth-htl-20260730.md`](verification-eth-htl-20260730.md)） |
 | **搖桿路徑** | **Pass** — Option B mux 注入 RC/MC；QGC `:14551` 僅指令／遙測 |
-| **延遲量測** | **Done** — L_cmd dense n=1000 · P50 5.3 ms（[`latency-report.html`](latency-report.html)） |
+| **延遲量測** | **Done** — L_cmd dense n=1000 · P50 5.3 ms（[`../latency/latency-report.html`](../latency/latency-report.html)） |
 | **已淘汰路徑** | USB→PC→Wi‑Fi `mavlink-forward`（2026-07-29 存證；2026-07-31 標 Deprecated） |
 | **待做** | `L_telem_qgc`（HUD）；中期空口後改 Baseline-Product |
 | **遠端 repo** | 本地尚有 mux／latency 變更待 commit（以 `git status` 為準） |
@@ -75,7 +75,7 @@ flowchart LR
 
 1. ArduPilot 韌體內建 `NET_*` 參數（乙太網 + MAVLink 路由）
 2. 2026-07-30 實測：`NET_ENABLE` 0→1、`NET_P1` UDP Client → 板 `:14550` 均 **Pass**
-3. 實作：[`../tool/set_fc_eth_params.py`](../tool/set_fc_eth_params.py)
+3. 實作：[`../../tool/bring-up/set_fc_eth_params.py`](../../tool/bring-up/set_fc_eth_params.py)
 
 **寫入參數摘要：**
 
@@ -211,11 +211,11 @@ print('OK sysid=', m.target_system)
 
 | 日期 | 項目 | 結果 |
 |------|------|------|
-| 2026-07-29 | USB→PC→Wi‑Fi forward | Pass（已 Deprecated，存證 [`verification-report.md`](verification-report.md)） |
+| 2026-07-29 | USB→PC→Wi‑Fi forward | Pass（已 Deprecated；存證見 QGC RealDrone `docs/deprecated/`） |
 | 2026-07-30 | eth0 HTL 直連 | Pass（[`verification-eth-htl-20260730.md`](verification-eth-htl-20260730.md)） |
 | 2026-07-31 | 路徑策略 | **僅保留 eth0 直連**；更新 README／AGENTS／操作手冊 |
 | 2026-07-31 | Option B mux | Pass — HID→mux→FC；QGC `:14551` |
-| 2026-07-31 | 搖桿延遲 | Done — dense n=1000 P50 5.3 ms；[`latency-report.html`](latency-report.html) |
+| 2026-07-31 | 搖桿延遲 | Done — dense n=1000 P50 5.3 ms；[`../latency/latency-report.html`](../latency/latency-report.html) |
 
 ### 7.2 待辦
 
@@ -242,9 +242,10 @@ print('OK sysid=', m.target_system)
 | [`architecture.md`](architecture.md) | 拓樸圖、失敗模式 |
 | [`操作手冊-RealDrone-USB.md`](操作手冊-RealDrone-USB.md) | 操作步驟、疑難 |
 | [`verification-eth-htl-20260730.md`](verification-eth-htl-20260730.md) | eth 驗收表 |
-| [`verification-report.md`](verification-report.md) | 已淘汰 USB Lab 存證 |
-| [`../tool/README.md`](../tool/README.md) | 腳本清單 |
-| [`../test/evidence/20260730-eth-htl-connected/`](../test/evidence/20260730-eth-htl-connected/) | 截圖／log |
+| USB Lab 存證 | 見姊妹 QGC RealDrone `docs/deprecated/` |
+| [`../../tool/README.md`](../../tool/README.md) | 腳本清單 |
+| [`../../test/evidence/mux-path/dense-n1000/latency-mux-n1000-latest/`](../../test/evidence/mux-path/dense-n1000/latency-mux-n1000-latest/) | mux 延遲證據 |
+| eth HTL 截圖 | 見姊妹 QGC RealDrone `test/evidence/qgc-path/20260730-eth-htl-connected/` |
 
 ---
 

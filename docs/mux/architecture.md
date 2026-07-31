@@ -28,8 +28,8 @@ flowchart LR
 搖桿 HID → mux 注入 RC_CHANNELS_OVERRIDE + MANUAL_CONTROL（離中位時）→ 飛控
 ```
 
-一鍵 eth bring-up：[`../tool/bring-up/setup-eth-htl.ps1`](../tool/bring-up/setup-eth-htl.ps1)（預設開 QGC 聽 :14550）  
-搖桿／飛行 UX：再跑 [`../tool/with-qgc/start-joy-direct.ps1`](../tool/with-qgc/start-joy-direct.ps1)（mux 佔 :14550，QGC 改 :14551）
+一鍵 eth bring-up：[`../../tool/bring-up/setup-eth-htl.ps1`](../../tool/bring-up/setup-eth-htl.ps1)  
+搖桿／飛行 UX：[`../../tool/start-with-qgc.ps1`](../../tool/start-with-qgc.ps1)（mux `:14550`，QGC `:14551`）或 [`../../tool/start-no-qgc.ps1`](../../tool/start-no-qgc.ps1)
 
 **Option B mux — 職責分工：**
 | 路徑 | 誰發 | 內容 |
@@ -50,13 +50,12 @@ flowchart LR
 | L_cmd_edge | 22 | 8.7 ms | 17.9 ms | 猛推邊緣 → 首包 |
 
 探針：`getevent -lt`（T0）+ mux `-L`（T1），同 CLOCK_MONOTONIC。  
-報告：[`latency-report.html`](latency-report.html) · Evidence：[`../test/evidence/latency-mux-n1000-latest/`](../test/evidence/latency-mux-n1000-latest/)
+報告：[`../latency/latency-report.html`](../latency/latency-report.html) · Evidence：[`../../test/evidence/mux-path/dense-n1000/latency-mux-n1000-latest/`](../../test/evidence/mux-path/dense-n1000/latency-mux-n1000-latest/)
 
 ## 已淘汰 — USB via PC（僅存證，2026-07-29）
 
 > **不再使用。** 早期 Lab 驗證：PC COM → `mavlink-forward.py` → 板 Wi‑Fi UDP。  
-> 證據：[`verification-report.md`](verification-report.md)、[`../test/evidence/20260729-qgc-connected/`](../test/evidence/20260729-qgc-connected/)  
-> 腳本 `start-real-drone-forward.ps1` 保留但 **Deprecated**。
+> 存證見姊妹專案 [`../../20260730_Accton_Pro_RC_VS680_QGC_RealDrone_USB/docs/deprecated/verification-report-usb-lab.md`](../../20260730_Accton_Pro_RC_VS680_QGC_RealDrone_USB/docs/deprecated/verification-report-usb-lab.md)。
 
 ## 為何不是 adb reverse + TCP
 

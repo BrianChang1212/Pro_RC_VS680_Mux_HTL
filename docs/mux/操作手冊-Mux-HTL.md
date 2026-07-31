@@ -1,8 +1,8 @@
 ﻿# 操作手冊 — VS680 eth0 + mux ↔ Godwit（實體／HTL）
 
-> 路徑：`docs/` · eth 一鍵：[`../tool/bring-up/setup-eth-htl.ps1`](../tool/bring-up/setup-eth-htl.ps1) · 搖桿 mux：[`../tool/with-qgc/start-joy-direct.ps1`](../tool/with-qgc/start-joy-direct.ps1)  
-> **整合報告**：[`integration-report-eth0-fc-communication-20260731.md`](integration-report-eth0-fc-communication-20260731.md)  
-> **延遲報告**：[`latency-report.html`](latency-report.html)（Baseline-Mux-Eth-HTL）  
+> eth 一鍵：[`../../tool/bring-up/setup-eth-htl.ps1`](../../tool/bring-up/setup-eth-htl.ps1) · 一鍵 A/B：[`../../tool/start-with-qgc.ps1`](../../tool/start-with-qgc.ps1) / [`../../tool/start-no-qgc.ps1`](../../tool/start-no-qgc.ps1)  
+> **整合報告**：[`../bring-up/integration-report-eth0-fc-communication-20260731.md`](../bring-up/integration-report-eth0-fc-communication-20260731.md)  
+> **延遲報告**：[`../latency/latency-report.html`](../latency/latency-report.html)（Baseline-Mux-Eth-HTL）  
 > 驗證：2026-07-30 eth Pass · 2026-07-31 mux + 延遲 n=1000 · USB forward 已淘汰
 
 ## eth0 直連
@@ -79,7 +79,7 @@ cd D:\Brian\projects\Accton_Pro_RC\20260730_Accton_Pro_RC_VS680_QGC_RealDrone_US
 | 動杆 | Loiter 下有水平速度；mux log `mc=` 遞增 |
 | 延遲重測 | `.\collect_joy_latency_1000.ps1` |
 
-延遲結果（2026-07-31）：dense n=1000 · P50 **5.3 ms**／P95 **56.2 ms** · [`../test/evidence/latency-mux-n1000-latest/`](../test/evidence/latency-mux-n1000-latest/)
+延遲結果（2026-07-31）：dense n=1000 · P50 **5.3 ms**／P95 **56.2 ms** · [`../../test/evidence/mux-path/dense-n1000/latency-mux-n1000-latest/`](../../test/evidence/mux-path/dense-n1000/latency-mux-n1000-latest/)
 
 ### mux 疑難
 

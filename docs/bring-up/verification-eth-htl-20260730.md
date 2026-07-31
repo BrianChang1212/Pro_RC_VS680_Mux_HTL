@@ -26,7 +26,7 @@ QGC UDP :14550
 
 PC USB COM 僅用於參數寫入／備援，**不在** eth 資料路徑上。
 
-> **後續（2026-07-31）：** 飛行 UX 改 **mavlink_mux** 佔 `:14550`，QGC 聽 `:14551`；搖桿延遲見 [`latency-report.html`](latency-report.html)（Baseline-Mux-Eth-HTL）。
+> **後續（2026-07-31）：** 飛行 UX 改 **mavlink_mux** 佔 `:14550`，QGC 聽 `:14551`；搖桿延遲見 [`../latency/latency-report.html`](../latency/latency-report.html)（Baseline-Mux-Eth-HTL）。
 
 ## 半雙工根因
 
@@ -44,7 +44,7 @@ cd D:\Brian\projects\Accton_Pro_RC\20260730_Accton_Pro_RC_VS680_QGC_RealDrone_US
 
 ## 證據
 
-[`../test/evidence/20260730-eth-htl-connected/`](../test/evidence/20260730-eth-htl-connected/)
+[`../../../20260730_Accton_Pro_RC_VS680_QGC_RealDrone_USB/test/evidence/qgc-path/20260730-eth-htl-connected/`](../../../20260730_Accton_Pro_RC_VS680_QGC_RealDrone_USB/test/evidence/qgc-path/20260730-eth-htl-connected/)
 
 ## 與 2026-07-29 USB via PC 路徑
 

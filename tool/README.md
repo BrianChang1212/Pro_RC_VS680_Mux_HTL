@@ -1,6 +1,8 @@
-# tool/ — Mux HTL helpers（分類）
+# tool/ — Mux HTL helpers（**系統 mux** · 分類）
 
-> **唯一資料路徑：** eth0 + `mavlink_mux`（`:14550`）。PC USB 僅寫 FC 參數。
+> **本專案定位：搖桿經板端 `mavlink_mux`。**  
+> 經 QGC 搖桿 → [`../../20260730_Accton_Pro_RC_VS680_QGC_RealDrone_USB/tool/`](../../20260730_Accton_Pro_RC_VS680_QGC_RealDrone_USB/tool/)（`setup-eth-htl.ps1`）。  
+> 資料路徑：eth0 + mux（`:14550`）。PC USB 僅寫 FC 參數。
 
 ## 一鍵啟動分類
 

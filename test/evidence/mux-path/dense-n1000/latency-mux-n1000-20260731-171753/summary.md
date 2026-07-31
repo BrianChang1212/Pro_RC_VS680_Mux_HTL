@@ -1,10 +1,10 @@
-# Joy → FC latency — 1000 samples (latest · 2026-07-31)
+# Joy → FC latency — 1000 samples (2026-07-31)
 
 ## Files
 - `samples-n1000.csv` — **1000 rows** (primary)
 - `getevent.txt` — raw HID
 - `mux_stick_lat.log` — mux `-L` CLOCK_MONOTONIC sends
-- Source capture: `../latency-mux-n1000-20260731-171753/`
+- Stable copy: `test/evidence/latency-mux-n1000-latest/`
 
 ## Columns
 | column | meaning |
@@ -30,8 +30,3 @@
 - Dense: each active mux inject paired with latest `EV_ABS` ≤ T1
 - `mc_threshold=50`, `max_lag=0.12s`, `--any-abs`
 - Path: HID → mavlink_mux → eth0 :14550 → FC
-- Report: `docs/latency-report.html` (**Baseline-Mux-Eth-HTL**)
-
-## Related
-- Edge-style (n=22): `../latency-mux-20260731-171328/` · P50 8.7 / P95 17.9 ms
-- Historical QGC path: `../20260731-latency-eth-htl/` · P50 97.6 ms（對照，非現行）
