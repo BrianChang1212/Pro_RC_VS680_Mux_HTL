@@ -88,6 +88,12 @@
   }
   .ref-group-title.rc { color: #64748b; border-color: #64748b; }
   .ref-group-title.gcs { color: #0f766e; border-color: #0f766e; }
+  .ref-local-note {
+    margin: 0 0 6px; padding: 6px 8px;
+    border-left: 3px solid #b45309; background: #fff7ed;
+    color: #92400e; font-size: 7.5pt;
+  }
+  .ref-local-note a { color: #b45309; font-weight: 700; text-decoration: none; }
   h2 .tag {
     font-size: 7.5pt; font-weight: 600; margin-left: 6px;
     padding: 1px 6px; border-radius: 3px; vertical-align: middle;
@@ -781,6 +787,10 @@
     主表先呈現遙控器鏈路；地面站表補充公開產品與方法參考。
   </div>
   <h3 class="ref-group-title rc">遙控器 → 無人機</h3>
+  <div class="ref-local-note">
+    <strong>本案局部量測：</strong>USB 搖桿 → mavlink-router，平均 10.8 ms（n=846）；尚未包含 eth0 → FC 飛控。
+    <a href="../../test/evidence/mux-path/dense-n1000/latency-mux-n1000-20260731-180536/summary.md">本報告證據</a>
+  </div>
   <table class="data ref compact">
     <tr>
       <th>類別</th>
@@ -789,43 +799,36 @@
       <th>用途</th>
       <th>來源</th>
     </tr>
-    <tr class="ref-mux">
-      <td><strong>本報告實測</strong></td>
-      <td>USB 搖桿 → mavlink-router（送出控制指令）</td>
-      <td class="mono"><strong>平均 10.8 ms</strong></td>
-      <td>量測樣本 · n=846</td>
-      <td class="source"><a href="../../test/evidence/mux-path/dense-n1000/latency-mux-n1000-20260731-180536/summary.md">本報告證據</a></td>
-    </tr>
     <tr class="ref-rc">
-      <td>ELRS 500–1000 Hz</td>
+      <td>ExpressLRS</td>
       <td>遙控器搖桿 → 飛控</td>
-      <td class="mono">≈1.5–4 ms</td>
-      <td>競速／低延遲目標</td>
+      <td class="mono">典型 4–10 ms</td>
+      <td>封包率依設定變化</td>
       <td class="source"><a href="https://blog.wildair.ch/drone-rc-protocols/">公開整理</a></td>
     </tr>
     <tr class="ref-rc">
-      <td>ELRS 250 Hz／Tracer／Ghost</td>
+      <td>GHST（Ghost）</td>
       <td>遙控器 → 飛控</td>
-      <td class="mono">≈4–10 ms</td>
-      <td>一般 FPV 手感</td>
+      <td class="mono">典型 7–12 ms</td>
+      <td>封包率依設定變化</td>
       <td class="source"><a href="https://blog.wildair.ch/drone-rc-protocols/">公開整理</a></td>
     </tr>
     <tr class="ref-rc">
-      <td>Crossfire 150 Hz</td>
+      <td>CRSF（Crossfire）</td>
       <td>遙控器 → 飛控</td>
-      <td class="mono">≈8–15 ms</td>
-      <td>長距 RF 常見</td>
+      <td class="mono">典型 10–15 ms</td>
+      <td>封包率依設定變化</td>
       <td class="source"><a href="https://blog.wildair.ch/drone-rc-protocols/">公開整理</a></td>
     </tr>
     <tr class="ref-rc">
       <td>ELRS／CF 長距 50 Hz</td>
       <td>遙控器 → 飛控</td>
-      <td class="mono">≈18–22 ms</td>
-      <td>遠距可接受</td>
+      <td class="mono">未提供固定值</td>
+      <td>封包率與通訊距離取捨</td>
       <td class="source"><a href="https://blog.wildair.ch/drone-rc-protocols/">公開整理</a></td>
     </tr>
   </table>
-  <h3 class="ref-group-title gcs">地面站 → 無人機</h3>
+  <h3 class="ref-group-title gcs">地面站 → 無人機（產品與方法補充）</h3>
   <table class="data ref compact">
     <tr>
       <th>類別</th>
@@ -871,16 +874,16 @@
     </tr>
     <tr class="ref-gcs">
       <td>Joystick 直控</td>
-      <td>操作者搖桿 → 無人機動作</td>
+      <td>搖桿偏轉 → 致動器偏轉</td>
       <td class="mono">160–170 ms</td>
-      <td>實際 stick-to-actuator；單向</td>
+      <td>FPV 遙控站；單向</td>
       <td class="source"><a href="https://elib.dlr.de/192975/1/570296.pdf">DLR PDF</a></td>
     </tr>
     <tr class="ref-gcs">
       <td>Joystick 輔助模式</td>
-      <td>操作者搖桿 → 無人機動作</td>
+      <td>搖桿偏轉 → 致動器偏轉</td>
       <td class="mono">180–190 ms</td>
-      <td>實際 stick-to-actuator；單向</td>
+      <td>FPV 遙控站；單向</td>
       <td class="source"><a href="https://elib.dlr.de/192975/1/570296.pdf">DLR PDF</a></td>
     </tr>
     <tr class="ref-gcs">
