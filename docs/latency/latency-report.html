@@ -401,10 +401,18 @@
 
   table.compact { font-size: 7.5pt; margin-bottom: 8px; }
   table.compact th, table.compact td { padding: 4px 6px; }
-  table.p1-summary th:first-child { width: 15%; }
+  table.p1-summary th:first-child { width: 13%; }
   table.p1-summary th:nth-child(2) { width: 8%; }
-  table.p1-summary th:nth-child(3) { width: 26%; }
-  table.p1-summary th:nth-child(5), table.p1-summary th:nth-child(6) { width: 9%; }
+  table.p1-summary th:nth-child(3) { width: 7%; }
+  table.p1-summary th:nth-child(4) { width: 24%; }
+  table.p1-summary th:nth-child(6), table.p1-summary th:nth-child(7) { width: 8%; }
+  table.p1-summary .flow-event { font-weight: 700; }
+  table.p1-summary .flow-range {
+    font-family: var(--mono);
+    font-weight: 700;
+    white-space: nowrap;
+    color: #334155;
+  }
   table.p1-summary tr.flow-down td { background: #fffbeb; }
   table.p1-summary tr.flow-down td:first-child { box-shadow: inset 3px 0 0 #b45309; }
   table.p1-summary tr.flow-up td { background: #eff6ff; }
@@ -616,33 +624,33 @@
   </div>
 
   <table class="data compact p1-summary">
-    <tr><th>資料流段</th><th>方向</th><th>段落</th><th>量測方式／指標</th><th>P50</th><th>P95</th><th>狀態</th></tr>
+    <tr><th>事件</th><th>區間</th><th>方向</th><th>段落</th><th>量測方式／指標</th><th>P50</th><th>P95</th><th>狀態</th></tr>
     <tr class="flow-down">
-      <td class="mono">Arm/Takeoff (T2~T1)</td><td>下行</td><td>QGC → mavlink_mux</td><td class="mono">QGC command log ↔ mux -L</td>
+      <td class="flow-event">Arm/Takeoff</td><td class="flow-range">T2 → T1</td><td>下行</td><td>QGC → mavlink_mux</td><td class="mono">QGC command log ↔ mux -L</td>
       <td class="tbd">—</td><td class="tbd">—</td><td class="tbd">事件對齊</td>
     </tr>
     <tr class="flow-down">
-      <td class="mono">HID (T0~T1)</td><td>下行</td><td>USB 搖桿 → mavlink_mux</td><td class="mono">getevent -lt ↔ mux -L<br>L_cmd dense 重測 n=846</td>
+      <td class="flow-event">HID</td><td class="flow-range">T0 → T1</td><td>下行</td><td>USB 搖桿 → mavlink_mux</td><td class="mono">getevent -lt ↔ mux -L<br>L_cmd dense 重測 n=846</td>
       <td class="mono">5.1 ms</td><td class="mono">40.9 ms</td><td>重測 Done</td>
     </tr>
     <tr class="flow-down">
-      <td class="mono">RC/MC inject (T1~T3)</td><td>下行</td><td>mavlink_mux → eth0</td><td class="mono">mux -L ↔ tcpdump eth0<br>L_cmd_eth</td>
+      <td class="flow-event">RC/MC inject</td><td class="flow-range">T1 → T3</td><td>下行</td><td>mavlink_mux → eth0</td><td class="mono">mux -L ↔ tcpdump eth0<br>L_cmd_eth</td>
       <td class="tbd">—</td><td class="tbd">—</td><td class="tbd">待 eth0 pcap</td>
     </tr>
     <tr class="flow-down">
-      <td class="mono">UDP 下行 (T3~T4)</td><td>下行</td><td>eth0 → Godwit FC</td><td class="mono">tcpdump eth0 ↔ FC receive</td>
+      <td class="flow-event">UDP 下行</td><td class="flow-range">T3 → T4</td><td>下行</td><td>eth0 → Godwit FC</td><td class="mono">tcpdump eth0 ↔ FC receive</td>
       <td class="tbd">—</td><td class="tbd">—</td><td class="tbd">待 FC 端探針</td>
     </tr>
     <tr class="flow-up">
-      <td class="mono">ATTITUDE (T4~T3)</td><td>上行</td><td>Godwit FC → eth0</td><td class="mono">FC ATTITUDE ↔ tcpdump eth0<br>L_telem_eth</td>
+      <td class="flow-event">ATTITUDE</td><td class="flow-range">T4 → T3</td><td>上行</td><td>Godwit FC → eth0</td><td class="mono">FC ATTITUDE ↔ tcpdump eth0<br>L_telem_eth</td>
       <td class="tbd">—</td><td class="tbd">—</td><td class="tbd">待 eth0 pcap</td>
     </tr>
     <tr class="flow-up">
-      <td class="mono">經 mux 上行 (T3~T2)</td><td>上行</td><td>eth0 → QGC</td><td class="mono">tcpdump -tt ↔ QGC receive</td>
+      <td class="flow-event">經 mux 上行</td><td class="flow-range">T3 → T2</td><td>上行</td><td>eth0 → QGC</td><td class="mono">tcpdump -tt ↔ QGC receive</td>
       <td class="tbd">—</td><td class="tbd">—</td><td class="tbd">待量</td>
     </tr>
     <tr class="flow-up">
-      <td class="mono">HUD / 地圖軌跡 (T2~T2)</td><td>上行</td><td>QGC 本機顯示</td><td class="mono">QGC HUD ↔ 錄影<br>L_telem_qgc</td>
+      <td class="flow-event">HUD / 地圖軌跡</td><td class="flow-range">T2 → T2</td><td>上行</td><td>QGC 本機顯示</td><td class="mono">QGC HUD ↔ 錄影<br>L_telem_qgc</td>
       <td class="tbd">—</td><td class="tbd">—</td><td class="tbd">待量</td>
     </tr>
   </table>
