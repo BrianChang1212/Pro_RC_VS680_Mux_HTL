@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VS680 RealDrone — 通訊延遲報告（mux 搖桿路徑 · VS680 ↔ 無人機）</title>
+<title>VS680 與 FC 飛控整體控制鏈路延遲報告</title>
 <style>
   :root {
     --d1: #2563eb;
@@ -261,6 +261,57 @@
     font-size: 28pt; font-weight: 700; color: #6366f1; text-align: center;
   }
 
+  .cover {
+    justify-content: space-between;
+    padding-top: 22mm;
+    padding-bottom: 18mm;
+  }
+  .cover-kicker {
+    color: var(--d2); font-size: 9pt; font-weight: 800;
+    letter-spacing: .12em; text-transform: uppercase;
+  }
+  .cover h1 {
+    max-width: 155mm; margin-top: 16mm;
+    font-size: 27pt; line-height: 1.25; font-weight: 800;
+  }
+  .cover-sub {
+    max-width: 160mm; margin-top: 8mm;
+    color: var(--muted); font-size: 12pt; line-height: 1.6;
+  }
+  .cover-flow {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 6px; align-items: center; margin: 20mm 0 14mm;
+    padding: 12px 10px; border: 1px solid var(--line);
+    border-radius: 10px; background: #f8fafc;
+  }
+  .cover-flow .step {
+    min-height: 48px; display: flex; align-items: center;
+    justify-content: center; padding: 6px; text-align: center;
+    border: 1.5px solid var(--d1-border); border-radius: 7px;
+    background: var(--d1-bg); color: var(--d1); font-size: 8.5pt;
+    font-weight: 700;
+  }
+  .cover-flow .step:first-child { border-color: #f59e0b; background: #fffbeb; color: #92400e; }
+  .cover-flow .step:last-child { border-color: var(--d2-border); background: var(--d2-bg); color: var(--d2); }
+  .cover-flow .arrow { color: var(--muted); text-align: center; font-size: 14pt; font-weight: 700; }
+  .cover-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  }
+  .cover-card {
+    min-height: 76px; padding: 10px; border: 1px solid var(--line);
+    border-radius: 8px; background: #fff;
+  }
+  .cover-card strong { display: block; margin-bottom: 5px; font-size: 8.5pt; }
+  .cover-card span { color: var(--muted); font-size: 7.5pt; }
+  .cover-card.d1 { border-top: 3px solid var(--d1); }
+  .cover-card.d2 { border-top: 3px solid var(--d2); }
+  .cover-card.mux { border-top: 3px solid #b45309; }
+  .cover-meta {
+    display: flex; justify-content: space-between; gap: 12px;
+    padding-top: 10px; border-top: 1px solid var(--line);
+    color: var(--muted); font-size: 8pt;
+  }
+
   .timing {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -400,8 +451,8 @@
     }
     .page:last-child { break-after: auto; page-break-after: auto; }
   }
-  /* The compact report keeps only the overview and Now -> Target pages. */
-  #p3, #p4 { display: none; }
+  /* The compact report keeps the cover, overview, and Now -> Target pages. */
+  #p4, #p5 { display: none; }
   @page { size: A4; margin: 0; }
 </style>
 </head>
@@ -480,11 +531,33 @@
   </symbol>
 </svg>
 
-<!-- ===================== PAGE 1 · Overall data flow ===================== -->
-<section class="page" id="p1">
+<!-- ===================== PAGE 1 · Report cover ===================== -->
+<section class="page cover" id="p1">
+  <div>
+    <div class="cover-kicker">VS680 · FC Flight Controller · Baseline-Mux-Eth-HTL</div>
+    <h1>VS680 與 FC 飛控整體控制鏈路延遲報告</h1>
+    <div class="cover-sub">從 USB 搖桿輸入、VS680 板端轉發，到 eth0 有線連接與 FC 飛控的資料流分析。</div>
+
+    <div class="cover-flow" aria-label="整體控制鏈路">
+      <div class="step">USB 搖桿</div><div class="arrow">→</div>
+      <div class="step">VS680</div><div class="arrow">→</div>
+      <div class="step">FC 飛控</div>
+    </div>
+
+    <div class="cover-grid">
+      <div class="cover-card d1"><strong>P2 · 整體資料流</strong><span>T0～T4 時間節點、上下行方向與段落量測。</span></div>
+      <div class="cover-card d2"><strong>P3 · 現況與目標</strong><span>eth0 有線架構與空口／RF 目標路徑。</span></div>
+      <div class="cover-card mux"><strong>量測焦點</strong><span>控制指令、FC 遙測與端到端延遲。</span></div>
+    </div>
+  </div>
+  <div class="cover-meta"><span>文件用途：架構與延遲分析</span><span>2026-07-31 · 含晚間重測</span></div>
+</section>
+
+<!-- ===================== PAGE 2 · Overall data flow ===================== -->
+<section class="page" id="p2">
   <header class="page-header">
     <div>
-      <h1>整體資料流 · 通訊延遲</h1>
+      <h1>VS680 與 FC 飛控整體控制鏈路延遲報告</h1>
       <div class="sub">搖桿 → mavlink-router（板端 MAVLink 轉發／搖桿注入）→ FC · QGC 指令／遙測 · VS680 ↔ Godwit · Baseline-Mux-Eth-HTL · 2026-07-31（含晚間重測）</div>
     </div>
     <div class="legend">
@@ -493,7 +566,7 @@
     </div>
   </header>
 
-  <h2>整體資料流 <span class="tag d1">P1 總圖</span><span class="tag mux">mavlink-router：板端轉發／注入程序</span></h2>
+  <h2>整體資料流 <span class="tag d1">P2 總圖</span><span class="tag mux">mavlink-router：板端轉發／注入程序</span></h2>
 
   <div class="timeline-axis" aria-label="資料流時間節點">
     <div class="timebox t0">T0</div>
@@ -630,17 +703,17 @@
   </table>
 
   <footer class="page-footer">
-    <span>整體資料流 · Baseline-Mux-Eth-HTL · P1 總圖 → P2 Now／Target</span>
-    <span>頁 1 / 2</span>
+    <span>整體資料流 · Baseline-Mux-Eth-HTL · P2 總圖 → P3 Now／Target</span>
+    <span>頁 2 / 3</span>
   </footer>
 </section>
 
-<!-- ===================== PAGE 2 · Now → Target ===================== -->
-<section class="page" id="p2">
+<!-- ===================== PAGE 3 · Now → Target ===================== -->
+<section class="page" id="p3">
   <header class="page-header">
     <div>
       <h1>Now → Target</h1>
-      <div class="sub">← P1 整體流 · 有線 eth → 空口／RF</div>
+      <div class="sub">← P2 整體流 · 有線 eth → 空口／RF</div>
     </div>
     <div class="legend">
       <span><i class="swatch d1"></i> D1</span>
@@ -651,8 +724,10 @@
   <div class="roadmap">
     <div class="road now">
       <div class="lbl">Now</div>
-      <div class="title">eth0 有線</div>
+      <div class="title">USB 搖桿 → eth0 有線</div>
       <div class="vflow">
+        <div class="inode d1"><svg><use href="#i-gamepad"/></svg><div class="cap">USB 搖桿</div></div>
+        <div class="down">↓</div>
         <div class="inode d1"><svg><use href="#i-board"/></svg><div class="cap">VS680</div></div>
         <div class="down">↓</div>
         <div class="inode d2"><svg><use href="#i-eth"/></svg><div class="cap">eth0</div></div>
@@ -786,12 +861,12 @@
 
   <footer class="page-footer">
     <span>VS680 ↔ 無人機 · Baseline-Mux-Eth-HTL · 公開參考對照</span>
-    <span>頁 2 / 2</span>
+    <span>頁 3 / 3</span>
   </footer>
 </section>
 
-<!-- ===================== PAGE 3 · D1 ===================== -->
-<section class="page" id="p3">
+<!-- ===================== PAGE 4 · D1 detail (hidden) ===================== -->
+<section class="page" id="p4">
   <header class="page-header">
     <div>
       <h1>D1 VS680 耗時</h1>
@@ -916,8 +991,8 @@
   </footer>
 </section>
 
-<!-- ===================== PAGE 4 · D2 ===================== -->
-<section class="page" id="p4">
+<!-- ===================== PAGE 5 · D2 detail (hidden) ===================== -->
+<section class="page" id="p5">
   <header class="page-header">
     <div>
       <h1>D2 VS680 ↔ 飛控</h1>
