@@ -230,6 +230,10 @@
   table.data.ref tr.ref-uav td:first-child { box-shadow: inset 3px 0 0 #0f766e; }
   table.data.ref tr.ref-method td { background: #f8fafc; }
   table.data.ref tr.ref-method td:first-child { box-shadow: inset 3px 0 0 #64748b; }
+  table.data.ref tr.ref-tw td { background: #f0fdfa; }
+  table.data.ref tr.ref-tw td:first-child { box-shadow: inset 3px 0 0 #0f766e; }
+  table.data.ref tr.ref-history td { background: #f1f5f9; }
+  table.data.ref tr.ref-history td:first-child { box-shadow: inset 3px 0 0 #64748b; }
   .source-key {
     display: inline-block; padding: 1px 5px; margin-right: 5px;
     border-radius: 3px; font-size: 7pt; font-weight: 700;
@@ -239,7 +243,10 @@
   .source-key.mux { color: #b45309; }
   .source-key.qgc { color: #6366f1; }
   .source-key.uav { color: #0f766e; }
+  .source-key.tw { color: #0f766e; }
+  .source-key.history { color: #64748b; }
   table.data.ref .source { white-space: nowrap; font-size: 6.5pt; }
+  table.data.tw-products td { font-size: 6.8pt; padding: 3px 5px; }
   table.data.ref .source a { color: var(--d1); text-decoration: none; font-weight: 700; }
   table.data.ref .source a:hover { text-decoration: underline; }
   .road.now { border-color: var(--d2); background: var(--d2-bg); }
@@ -277,6 +284,11 @@
   .cover-sub {
     max-width: 160mm; margin-top: 8mm;
     color: var(--muted); font-size: 12pt; line-height: 1.6;
+  }
+  .cover-context {
+    margin-top: 8mm; padding: 8px 10px;
+    border-left: 3px solid var(--d2); background: var(--d2-bg);
+    color: #065f46; font-size: 8.5pt; font-weight: 600;
   }
   .cover-flow {
     display: grid; grid-template-columns: repeat(5, 1fr);
@@ -534,9 +546,10 @@
 <!-- ===================== PAGE 1 · Report cover ===================== -->
 <section class="page cover" id="p1">
   <div>
-    <div class="cover-kicker">VS680 · FC Flight Controller · Baseline-Mux-Eth-HTL</div>
+    <div class="cover-kicker">VS680 · FC 飛控 · Baseline-Mux-Eth-HTL</div>
     <h1>VS680 與 FC 飛控整體控制鏈路延遲報告</h1>
     <div class="cover-sub">從 USB 搖桿輸入、VS680 板端轉發，到 eth0 有線連接與 FC 飛控的資料流分析。</div>
+    <div class="cover-context">測試環境：USB 搖桿 → VS680 → eth0 有線 → FC 飛控</div>
 
     <div class="cover-flow" aria-label="整體控制鏈路">
       <div class="step">USB 搖桿</div><div class="arrow">→</div>
@@ -558,10 +571,10 @@
   <header class="page-header">
     <div>
       <h1>VS680 與 FC 飛控整體控制鏈路延遲報告</h1>
-      <div class="sub">搖桿 → mavlink-router（板端 MAVLink 轉發／搖桿注入）→ FC · QGC 指令／遙測 · VS680 ↔ Godwit · Baseline-Mux-Eth-HTL · 2026-07-31（含晚間重測）</div>
+      <div class="sub">搖桿 → mavlink-router（板端 MAVLink 轉發／搖桿注入）→ FC · QGC 指令／遙測 · VS680 ↔ FC 飛控 · Baseline-Mux-Eth-HTL · 2026-07-31（含晚間重測）</div>
     </div>
     <div class="legend">
-      <span><i class="swatch d1"></i> D1 VS680 / mux</span>
+      <span><i class="swatch d1"></i> D1 VS680 / router</span>
       <span><i class="swatch d2"></i> D2 VS680↔飛控</span>
     </div>
   </header>
@@ -618,7 +631,7 @@
       <text x="465" y="38" text-anchor="middle" font-size="8" font-family="Consolas,monospace" fill="#64748b">UDP</text>
 
       <rect x="550" y="8" width="100" height="36" rx="6" fill="#fff" stroke="#059669" stroke-width="1.5"/>
-      <text x="600" y="30" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a">Godwit FC</text>
+      <text x="600" y="30" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a">FC 飛控</text>
 
       <line x1="60" y1="44" x2="60" y2="300" stroke="#b45309" stroke-width="2" stroke-dasharray="5 4"/>
       <line x1="195" y1="44" x2="195" y2="300" stroke="#2563eb" stroke-width="2" stroke-dasharray="5 4"/>
@@ -660,7 +673,7 @@
       <line x1="465" y1="232" x2="344" y2="232" stroke="#0369a1" stroke-width="1.8"/>
       <line x1="272" y1="232" x2="201" y2="232" stroke="#0369a1" stroke-width="1.8" marker-end="url(#m-up)"/>
       <rect x="272" y="218" width="72" height="16" rx="3" fill="#e0f2fe" stroke="#7dd3fc"/>
-      <text x="308" y="230" text-anchor="middle" font-size="8" font-weight="600" fill="#0369a1">經 mux 上行</text>
+      <text x="308" y="230" text-anchor="middle" font-size="8" font-weight="600" fill="#0369a1">經 router 上行</text>
 
       <!-- 7: HUD self-loop (T3') on QGC -->
       <path d="M 195 276 C 135 276, 135 298, 195 298" fill="none" stroke="#0369a1" stroke-width="2" marker-end="url(#m-up-l)"/>
@@ -673,27 +686,27 @@
   <table class="data compact p1-summary">
     <tr><th>事件</th><th>區間</th><th>方向</th><th>段落</th><th>量測方式／指標</th><th>平均延遲</th></tr>
     <tr class="flow-down">
-      <td class="flow-event">Arm/Takeoff</td><td class="flow-range">T1 → T2</td><td>下行</td><td>QGC → mavlink-router</td><td>看 QGC 發出指令，到 router 記錄收到</td>
+      <td class="flow-event">Arm/Takeoff</td><td class="flow-range">T0 → T1</td><td>下行</td><td>QGC → mavlink-router</td><td>看 QGC 發出指令，到 router 記錄收到</td>
       <td class="tbd">—</td>
     </tr>
     <tr class="flow-down">
-      <td class="flow-event">HID</td><td class="flow-range">T0 → T2</td><td>下行</td><td>USB 搖桿 → mavlink-router</td><td>看搖桿動作，到 router 送出指令<br>L_cmd 重測 n=846</td>
+      <td class="flow-event">HID</td><td class="flow-range">T0 → T1</td><td>下行</td><td>USB 搖桿 → mavlink-router</td><td>看搖桿動作，到 router 送出指令<br>L_cmd 重測 n=846</td>
       <td class="mono">10.8 ms</td>
     </tr>
     <tr class="flow-down">
-      <td class="flow-event">RC/MC inject</td><td class="flow-range">T2 → T3</td><td>下行</td><td>mavlink-router → eth0</td><td>比對 router 送出，到 eth0 封包出去<br>L_cmd_eth</td>
+      <td class="flow-event">RC/MC inject</td><td class="flow-range">T1 → T2</td><td>下行</td><td>mavlink-router → eth0</td><td>比對 router 送出，到 eth0 封包出去<br>L_cmd_eth</td>
       <td class="tbd">—</td>
     </tr>
     <tr class="flow-down">
-      <td class="flow-event">UDP 下行</td><td class="flow-range">T3 → T4</td><td>下行</td><td>eth0 → Godwit FC</td><td>比對 eth0 封包出去，到 FC 收到</td>
+      <td class="flow-event">UDP 下行</td><td class="flow-range">T2 → T3</td><td>下行</td><td>eth0 → FC 飛控</td><td>比對 eth0 封包出去，到 FC 收到</td>
       <td class="tbd">—</td>
     </tr>
     <tr class="flow-up">
-      <td class="flow-event">ATTITUDE</td><td class="flow-range">T4 → T3</td><td>上行</td><td>Godwit FC → eth0</td><td>比對 FC 送出 ATTITUDE，到 eth0 收到<br>L_telem_eth</td>
+      <td class="flow-event">ATTITUDE</td><td class="flow-range">T3 → T2</td><td>上行</td><td>FC 飛控 → eth0</td><td>比對 FC 送出 ATTITUDE，到 eth0 收到<br>L_telem_eth</td>
       <td class="tbd">—</td>
     </tr>
     <tr class="flow-up">
-      <td class="flow-event">經 router 上行</td><td class="flow-range">T3 → T1</td><td>上行</td><td>eth0 → QGC</td><td>比對 eth0 收到，到 QGC 收到</td>
+      <td class="flow-event">經 router 上行</td><td class="flow-range">T2 → T1</td><td>上行</td><td>eth0 → QGC</td><td>比對 eth0 收到，到 QGC 收到</td>
       <td class="tbd">—</td>
     </tr>
     <tr class="flow-up">
@@ -757,8 +770,8 @@
 
   <h2>公開參考對照 <span class="tag d2">不可直接相減</span></h2>
   <div class="ref-note">
-    <span class="source-key rf">公開 RF</span><span class="source-key uav">公開 UAV</span><span class="source-key mux">現行 Mux-Eth</span><span class="source-key qgc">官方方法／QGC</span>
-    僅納入可追溯來源；單向、RTT、週期與實際作動延遲不可直接相減。
+    <span class="source-key mux">本報告實測</span><span class="source-key tw">台灣產品架構</span><span class="source-key rf">公開參考 · RF</span><span class="source-key uav">公開參考 · UAV</span><span class="source-key qgc">官方方法／QGC</span><span class="source-key history">歷史實測對照</span>
+    公開參考、台灣產品架構與本報告實測分開呈現；單向、RTT、週期與實際作動延遲不可直接相減。
   </div>
   <table class="data ref compact">
     <tr>
@@ -768,89 +781,124 @@
       <th>用途</th>
       <th>來源</th>
     </tr>
+    <tr class="ref-mux">
+      <td><strong>本報告實測 · 基線</strong></td>
+      <td>USB 搖桿 → mavlink-router（送出控制指令）</td>
+      <td class="mono"><strong>平均 13.1 ms</strong></td>
+      <td>正式基線 · n=1000</td>
+      <td class="source"><a href="../../test/evidence/mux-path/dense-n1000/latency-mux-n1000-latest/summary.md">本報告證據</a></td>
+    </tr>
+    <tr class="ref-mux">
+      <td><strong>本報告實測 · 重測</strong></td>
+      <td>USB 搖桿 → mavlink-router（重測控制指令）</td>
+      <td class="mono"><strong>平均 10.8 ms</strong></td>
+      <td>晚間重測 · n=846</td>
+      <td class="source"><a href="../../test/evidence/mux-path/dense-n1000/latency-mux-n1000-20260731-180536/summary.md">本報告證據</a></td>
+    </tr>
+    <tr class="ref-tw">
+      <td>中科院無人機地面導控站</td>
+      <td>操作員 → 地面導控站 → 微波通信 → 無人機</td>
+      <td class="mono">未公開</td>
+      <td>即時操控、遙測與任務指揮</td>
+      <td class="source"><a href="https://www.ncsist.org.tw/csistdup/products/product.aspx?catalog=26&amp;product_Id=235">中科院</a></td>
+    </tr>
+    <tr class="ref-tw">
+      <td>TAIWAN UAV／智飛 GCS</td>
+      <td>操作員 → GCS → 無人機資料鏈</td>
+      <td class="mono">未公開</td>
+      <td>可攜式 GCS、影像監控</td>
+      <td class="source"><a href="https://www.taiwan-uav.com/en/product/gcs/no.9/ground-control-station-%28gcs%29">TAIWAN UAV</a></td>
+    </tr>
+    <tr class="ref-tw">
+      <td>RIVO GCS／RPilot</td>
+      <td>操作員 → RIVO GCS → RPilot 飛控</td>
+      <td class="mono">未公開</td>
+      <td>地面站與飛控整合</td>
+      <td class="source"><a href="https://rivo.com.tw/">RIVO</a></td>
+    </tr>
+    <tr class="ref-tw">
+      <td>英諾飛地面導控站</td>
+      <td>操作員 → 地面導控站 → 飛控</td>
+      <td class="mono">未公開</td>
+      <td>遙控器／地面站切換</td>
+      <td class="source"><a href="https://infuav.com/product/">英諾飛</a></td>
+    </tr>
+    <tr class="ref-tw">
+      <td>FAST CREATE YUTA</td>
+      <td>操作員 → 手持地面站 → 無人機</td>
+      <td class="mono">未公開</td>
+      <td>影像／數據傳輸一體遙控器</td>
+      <td class="source"><a href="https://www.agag.fast-create.com/%E7%84%A1%E4%BA%BA%E6%A9%9F%E6%93%8D%E4%BD%9C%E5%9C%B0%E9%9D%A2%E7%AB%99-%E9%81%99%E6%8E%A7%E5%99%A8-griound-control-station-radio">FAST CREATE</a></td>
+    </tr>
     <tr class="ref-rf">
       <td>ELRS 500–1000 Hz</td>
-      <td>RF 下行 stick→FC</td>
+      <td>遙控器搖桿 → 飛控</td>
       <td class="mono">≈1.5–4 ms</td>
       <td>競速／低延遲目標</td>
       <td class="source"><a href="https://blog.wildair.ch/drone-rc-protocols/">公開整理</a></td>
     </tr>
     <tr class="ref-rf">
       <td>ELRS 250 Hz／Tracer／Ghost</td>
-      <td>RF 下行</td>
+      <td>遙控器 → 飛控</td>
       <td class="mono">≈4–10 ms</td>
       <td>一般 FPV 手感</td>
       <td class="source"><a href="https://blog.wildair.ch/drone-rc-protocols/">公開整理</a></td>
     </tr>
     <tr class="ref-rf">
       <td>Crossfire 150 Hz</td>
-      <td>RF 下行</td>
+      <td>遙控器 → 飛控</td>
       <td class="mono">≈8–15 ms</td>
       <td>長距 RF 常見</td>
       <td class="source"><a href="https://blog.wildair.ch/drone-rc-protocols/">公開整理</a></td>
     </tr>
     <tr class="ref-rf">
       <td>ELRS／CF 長距 50 Hz</td>
-      <td>RF 下行</td>
+      <td>遙控器 → 飛控</td>
       <td class="mono">≈18–22 ms</td>
       <td>遠距可接受</td>
       <td class="source"><a href="https://blog.wildair.ch/drone-rc-protocols/">公開整理</a></td>
     </tr>
     <tr class="ref-uav">
       <td>Joystick 直控</td>
-      <td>Joystick → aircraft actuator</td>
+      <td>操作者搖桿 → 無人機動作</td>
       <td class="mono">160–170 ms</td>
       <td>實際 stick-to-actuator；單向</td>
       <td class="source"><a href="https://elib.dlr.de/192975/1/570296.pdf">DLR PDF</a></td>
     </tr>
     <tr class="ref-uav">
       <td>Joystick 輔助模式</td>
-      <td>Joystick → aircraft actuator</td>
+      <td>操作者搖桿 → 無人機動作</td>
       <td class="mono">180–190 ms</td>
       <td>實際 stick-to-actuator；單向</td>
       <td class="source"><a href="https://elib.dlr.de/192975/1/570296.pdf">DLR PDF</a></td>
     </tr>
     <tr class="ref-uav">
       <td>4G UAV 控制</td>
-      <td>RC input → UAV control</td>
+      <td>控制端 → 無人機控制</td>
       <td class="mono">97.3 ms<br>95% CI 95.5–99.1</td>
       <td>控制鏈路；單向，不是 RTT</td>
       <td class="source"><a href="https://www.mdpi.com/2504-446X/9/12/812">MDPI</a></td>
     </tr>
     <tr class="ref-method">
       <td>MAVLink PING</td>
-      <td>GCS／VS680 ↔ FC</td>
+      <td>地面站／VS680 ↔ FC 飛控</td>
       <td class="mono">可計算 RTT</td>
       <td>封包 RTT 方法；無固定公開數字</td>
       <td class="source"><a href="https://mavlink.io/en/services/ping.html">MAVLink</a></td>
     </tr>
     <tr class="ref-method">
       <td>QGC Joystick</td>
-      <td>QGC → vehicle MAVLink</td>
+      <td>QGC → 飛控 MAVLink 指令</td>
       <td class="mono">25 Hz<br>≈40 ms 週期</td>
       <td>發送週期；不是端到端延遲</td>
       <td class="source"><a href="https://docs.qgroundcontrol.com/master/en/qgc-user-guide/setup_view/joystick.html">QGC</a></td>
     </tr>
-    <tr class="ref-mux">
-      <td><strong>本次 Mux-Eth-HTL</strong></td>
-      <td>HID→mux send_stick（T0→T1）</td>
-      <td class="mono"><strong>平均 13.1 ms</strong></td>
-      <td>正式基線 · n=1000</td>
-      <td class="source"><a href="../../test/evidence/mux-path/dense-n1000/latency-mux-n1000-latest/summary.md">本專案 evidence</a></td>
-    </tr>
-    <tr class="ref-mux">
-      <td><strong>重測 Mux-Eth-HTL</strong></td>
-      <td>HID→mux send_stick（T0→T1，重測）</td>
-      <td class="mono"><strong>平均 10.8 ms</strong></td>
-      <td>晚間重測 · n=846</td>
-      <td class="source"><a href="../../test/evidence/mux-path/dense-n1000/latency-mux-n1000-20260731-180536/summary.md">本專案 evidence</a></td>
-    </tr>
-    <tr class="ref-qgc">
-      <td>歷史 QGC 路徑</td>
-      <td>HID→QGC→eth MC（舊路徑）</td>
+    <tr class="ref-history">
+      <td>歷史實測對照</td>
+      <td>USB 搖桿 → QGC → eth0 → FC 飛控（舊路徑）</td>
       <td class="mono">平均 122.7 ms</td>
       <td>歷史對照 · n=22</td>
-      <td class="source"><a href="../../../Pro_RC_VS680_QGC_RealDrone_USB/test/evidence/qgc-path/20260731-latency-eth-htl/summary.md">歷史 evidence</a></td>
+      <td class="source"><a href="../../../Pro_RC_VS680_QGC_RealDrone_USB/test/evidence/qgc-path/20260731-latency-eth-htl/summary.md">歷史證據</a></td>
     </tr>
   </table>
   <p class="src" style="font-size:6.5pt;color:var(--muted);margin:2px 0 0">
@@ -860,7 +908,7 @@
   </p>
 
   <footer class="page-footer">
-    <span>VS680 ↔ 無人機 · Baseline-Mux-Eth-HTL · 公開參考對照</span>
+    <span>VS680 ↔ FC 飛控 · Baseline-Mux-Eth-HTL · 公開參考對照</span>
     <span>頁 3 / 3</span>
   </footer>
 </section>
@@ -986,7 +1034,7 @@
   </div>
 
   <footer class="page-footer">
-    <span>VS680 ↔ 無人機 · Baseline-Mux-Eth-HTL · mux-path/dense-n1000/</span>
+    <span>VS680 ↔ FC 飛控 · Baseline-Mux-Eth-HTL · mux-path/dense-n1000/</span>
     <span>此頁已收縮隱藏</span>
   </footer>
 </section>
@@ -1100,7 +1148,7 @@
   </div>
 
   <footer class="page-footer">
-    <span>VS680 ↔ 無人機 · Baseline-Mux-Eth-HTL · D2 數字來自 20260731-latency-eth-htl</span>
+    <span>VS680 ↔ FC 飛控 · Baseline-Mux-Eth-HTL · D2 數字來自 20260731-latency-eth-htl</span>
     <span>此頁已收縮隱藏</span>
   </footer>
 </section>
