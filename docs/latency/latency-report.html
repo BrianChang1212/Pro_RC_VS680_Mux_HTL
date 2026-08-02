@@ -523,8 +523,8 @@
 
   <div class="timeline-axis" aria-label="資料流時間節點">
     <div class="timebox t0">T0</div>
-    <div class="timebox">T2</div>
     <div class="timebox">T1</div>
+    <div class="timebox">T2</div>
     <div class="timebox">T3</div>
     <div class="timebox t4">T4</div>
   </div>
@@ -626,15 +626,15 @@
   <table class="data compact p1-summary">
     <tr><th>事件</th><th>區間</th><th>方向</th><th>段落</th><th>量測方式／指標</th><th>P50</th><th>P95</th><th>狀態</th></tr>
     <tr class="flow-down">
-      <td class="flow-event">Arm/Takeoff</td><td class="flow-range">T2 → T1</td><td>下行</td><td>QGC → mavlink_mux</td><td class="mono">QGC command log ↔ mux -L</td>
+      <td class="flow-event">Arm/Takeoff</td><td class="flow-range">T1 → T2</td><td>下行</td><td>QGC → mavlink_mux</td><td class="mono">QGC command log ↔ mux -L</td>
       <td class="tbd">—</td><td class="tbd">—</td><td class="tbd">事件對齊</td>
     </tr>
     <tr class="flow-down">
-      <td class="flow-event">HID</td><td class="flow-range">T0 → T1</td><td>下行</td><td>USB 搖桿 → mavlink_mux</td><td class="mono">getevent -lt ↔ mux -L<br>L_cmd dense 重測 n=846</td>
+      <td class="flow-event">HID</td><td class="flow-range">T0 → T2</td><td>下行</td><td>USB 搖桿 → mavlink_mux</td><td class="mono">getevent -lt ↔ mux -L<br>L_cmd dense 重測 n=846</td>
       <td class="mono">5.1 ms</td><td class="mono">40.9 ms</td><td>重測 Done</td>
     </tr>
     <tr class="flow-down">
-      <td class="flow-event">RC/MC inject</td><td class="flow-range">T1 → T3</td><td>下行</td><td>mavlink_mux → eth0</td><td class="mono">mux -L ↔ tcpdump eth0<br>L_cmd_eth</td>
+      <td class="flow-event">RC/MC inject</td><td class="flow-range">T2 → T3</td><td>下行</td><td>mavlink_mux → eth0</td><td class="mono">mux -L ↔ tcpdump eth0<br>L_cmd_eth</td>
       <td class="tbd">—</td><td class="tbd">—</td><td class="tbd">待 eth0 pcap</td>
     </tr>
     <tr class="flow-down">
@@ -646,11 +646,11 @@
       <td class="tbd">—</td><td class="tbd">—</td><td class="tbd">待 eth0 pcap</td>
     </tr>
     <tr class="flow-up">
-      <td class="flow-event">經 mux 上行</td><td class="flow-range">T3 → T2</td><td>上行</td><td>eth0 → QGC</td><td class="mono">tcpdump -tt ↔ QGC receive</td>
+      <td class="flow-event">經 mux 上行</td><td class="flow-range">T3 → T1</td><td>上行</td><td>eth0 → QGC</td><td class="mono">tcpdump -tt ↔ QGC receive</td>
       <td class="tbd">—</td><td class="tbd">—</td><td class="tbd">待量</td>
     </tr>
     <tr class="flow-up">
-      <td class="flow-event">HUD / 地圖軌跡</td><td class="flow-range">T2 → T2</td><td>上行</td><td>QGC 本機顯示</td><td class="mono">QGC HUD ↔ 錄影<br>L_telem_qgc</td>
+      <td class="flow-event">HUD / 地圖軌跡</td><td class="flow-range">T1 → T1</td><td>上行</td><td>QGC 本機顯示</td><td class="mono">QGC HUD ↔ 錄影<br>L_telem_qgc</td>
       <td class="tbd">—</td><td class="tbd">—</td><td class="tbd">待量</td>
     </tr>
   </table>
