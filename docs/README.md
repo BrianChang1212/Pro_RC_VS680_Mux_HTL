@@ -19,6 +19,7 @@
 | [`mux/操作手冊-Mux-HTL.md`](mux/操作手冊-Mux-HTL.md) | 操作手冊 |
 | [`latency/latency-report.html`](latency/latency-report.html) | **Baseline-Mux-Eth-HTL** |
 | [`latency/joystick-latency-plan.md`](latency/joystick-latency-plan.md) | 延遲量測計畫 |
+| [`latency/cross-device-timestamp-assessment.md`](latency/cross-device-timestamp-assessment.md) | 跨設備事件時間記錄與延遲可量測性判定 |
 | [`bring-up/verification-eth-htl-20260730.md`](bring-up/verification-eth-htl-20260730.md) | eth HTL 驗證 |
 | [`bring-up/integration-report-eth0-fc-communication-20260731.md`](bring-up/integration-report-eth0-fc-communication-20260731.md) | eth0／FC／PC COM FAQ |
 
