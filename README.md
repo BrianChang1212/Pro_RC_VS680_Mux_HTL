@@ -1,6 +1,6 @@
 # Accton Pro RC — VS680 Mux HTL（**系統 mux**）
 
-> **定位：基於系統中 `mavlink_mux`** — 搖桿由板端 mux 注入 FC。  
+> **定位：基於系統中 `mavlink-router`** — 搖桿由板端 router 注入 FC。
 > 經 QGC 搖桿路徑 → [`20260730_Accton_Pro_RC_VS680_QGC_RealDrone_USB`](../20260730_Accton_Pro_RC_VS680_QGC_RealDrone_USB/)。  
 > GitHub：https://github.com/BrianChang1212/Pro_RC_VS680_Mux_HTL
 
@@ -15,11 +15,11 @@
 | 專案 | 搖桿路徑 | 一鍵 |
 |------|----------|------|
 | [QGC RealDrone USB](../20260730_Accton_Pro_RC_VS680_QGC_RealDrone_USB/) | HID → **QGC** → FC | `setup-eth-htl.ps1` |
-| **本專案** | HID → **mavlink_mux** → FC | `start-with-qgc` / `start-no-qgc` |
+| **本專案** | HID → **mavlink-router** → FC | `start-with-qgc` / `start-no-qgc` |
 
 ```
 本專案（系統 mux）:
-  搖桿 HID → mavlink_mux :14550 → Godwit FC
+  搖桿 HID → mavlink-router :14550 → Godwit FC
   可選：QGC :14551 僅指令／遙測（Joystick OFF；杆仍走 mux）
 ```
 

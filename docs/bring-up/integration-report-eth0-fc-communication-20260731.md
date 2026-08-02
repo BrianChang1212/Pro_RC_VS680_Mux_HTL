@@ -11,15 +11,15 @@
 
 | 項目 | 狀態 |
 |------|------|
-| **唯一支援資料路徑** | VS680 **eth0** ↔ FC **Ethernet** · MAVLink **UDP :14550**（經 **`mavlink_mux`**） |
+| **唯一支援資料路徑** | VS680 **eth0** ↔ FC **Ethernet** · MAVLink **UDP :14550**（經 **`mavlink-router`**） |
 | **通訊驗證** | **Pass**（2026-07-30 eth HTL；見 [`verification-eth-htl-20260730.md`](verification-eth-htl-20260730.md)） |
 | **搖桿路徑** | **Pass** — Option B mux 注入 RC/MC；QGC `:14551` 僅指令／遙測 |
 | **延遲量測** | **Done** — L_cmd dense n=1000 · P50 5.3 ms（[`../latency/latency-report.html`](../latency/latency-report.html)） |
 | **已淘汰路徑** | USB→PC→Wi‑Fi `mavlink-forward`（2026-07-29 存證；2026-07-31 標 Deprecated） |
-| **待做** | `L_telem_qgc`（HUD）；中期空口後改 Baseline-Product |
+| **待做** | QGC lo :14551 本機轉發（非 T0–T4；可選）；中期空口後改 Baseline-Product |
 | **遠端 repo** | 本地尚有 mux／latency 變更待 commit（以 `git status` 為準） |
 
-**核心結論：** 板端與 FC 的日常通訊 **不是** Android shell 對 FC 下 cmd，而是 **MAVLink UDP 經 eth0**。飛行 UX 現行由 **`mavlink_mux`** 佔 `:14550`（搖桿注入 + 轉發），QGC 聽 `:14551`。PC USB 僅在 **首次／參數遺失** 時寫 `NET_*`。
+**核心結論：** 板端與 FC 的日常通訊 **不是** Android shell 對 FC 下 cmd，而是 **MAVLink UDP 經 eth0**。飛行 UX 現行由 **`mavlink-router`** 佔 `:14550`（搖桿注入 + 轉發），QGC 聽 `:14551`。PC USB 僅在 **首次／參數遺失** 時寫 `NET_*`。
 
 ---
 
@@ -37,7 +37,7 @@ flowchart LR
   end
   subgraph Board["VS680 主板"]
     ETH_B["eth0\n192.168.144.20"]
-    MUX["mavlink_mux\n:14550"]
+    MUX["mavlink-router\n:14550"]
     QGC["QGC App\nUDP :14551"]
     JOY["USB 搖桿 HID"]
   end
@@ -179,7 +179,7 @@ print('OK sysid=', m.target_system)
   板 adb：eth0 up + 192.168.144.20/24
   板 adb：svc wifi disable
   setup-eth-htl →（可選）QGC 先聽 :14550
-  start-joy-direct → mavlink_mux :14550 + QGC :14551
+  start-joy-direct → mavlink-router :14550 + QGC :14551
 
 [FC 開機後]
   FC eth 192.168.144.14 就緒
@@ -220,7 +220,7 @@ print('OK sysid=', m.target_system)
 ### 7.2 待辦
 
 - [x] HID→mux→FC 延遲量測 + evidence（[`joystick-latency-plan.md`](joystick-latency-plan.md)）
-- [ ] `L_telem_qgc`（HUD／錄影）
+- [ ] QGC lo :14551 本機轉發延遲（非 T0–T4 探針；可選 lo tcpdump）
 - [ ] 中期產品直連後 latency 報告改標 Baseline-Product
 - [ ] 提交 mux／latency／文件變更（git commit）
 

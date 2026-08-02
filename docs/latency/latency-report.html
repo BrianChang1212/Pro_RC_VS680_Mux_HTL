@@ -88,6 +88,7 @@
   }
   h2 .tag.d1 { background: var(--d1-bg); color: var(--d1); border: 1px solid var(--d1-border); }
   h2 .tag.d2 { background: var(--d2-bg); color: var(--d2); border: 1px solid var(--d2-border); }
+  h2 .tag.mux { background: #fff7ed; color: #b45309; border: 1px solid #fdba74; }
 
   table.data {
     width: 100%; border-collapse: collapse;
@@ -219,6 +220,28 @@
   table.data.ref tr.flow-down td:first-child { box-shadow: inset 3px 0 0 #b45309; }
   table.data.ref tr.flow-up td { background: #eff6ff; }
   table.data.ref tr.flow-up td:first-child { box-shadow: inset 3px 0 0 #2563eb; }
+  table.data.ref tr.ref-rf td { background: #f8fafc; }
+  table.data.ref tr.ref-rf td:first-child { box-shadow: inset 3px 0 0 #64748b; }
+  table.data.ref tr.ref-mux td { background: #fff7ed; }
+  table.data.ref tr.ref-mux td:first-child { box-shadow: inset 3px 0 0 #b45309; }
+  table.data.ref tr.ref-qgc td { background: #eef2ff; }
+  table.data.ref tr.ref-qgc td:first-child { box-shadow: inset 3px 0 0 #6366f1; }
+  table.data.ref tr.ref-uav td { background: #f0fdfa; }
+  table.data.ref tr.ref-uav td:first-child { box-shadow: inset 3px 0 0 #0f766e; }
+  table.data.ref tr.ref-method td { background: #f8fafc; }
+  table.data.ref tr.ref-method td:first-child { box-shadow: inset 3px 0 0 #64748b; }
+  .source-key {
+    display: inline-block; padding: 1px 5px; margin-right: 5px;
+    border-radius: 3px; font-size: 7pt; font-weight: 700;
+    background: #fff; border: 1px solid currentColor;
+  }
+  .source-key.rf { color: #64748b; }
+  .source-key.mux { color: #b45309; }
+  .source-key.qgc { color: #6366f1; }
+  .source-key.uav { color: #0f766e; }
+  table.data.ref .source { white-space: nowrap; font-size: 6.5pt; }
+  table.data.ref .source a { color: var(--d1); text-decoration: none; font-weight: 700; }
+  table.data.ref .source a:hover { text-decoration: underline; }
   .road.now { border-color: var(--d2); background: var(--d2-bg); }
   .road.tgt { border-color: #6366f1; background: #eef2ff; }
   .road .lbl {
@@ -237,24 +260,6 @@
   .big-arr {
     font-size: 28pt; font-weight: 700; color: #6366f1; text-align: center;
   }
-
-  .domain-map {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 12px;
-  }
-  .dcard {
-    border-radius: 10px; padding: 14px; text-align: center;
-    border: 2px solid;
-  }
-  .dcard.d1 { border-color: var(--d1-border); background: var(--d1-bg); }
-  .dcard.d2 { border-color: var(--d2-border); background: var(--d2-bg); }
-  .dcard svg { width: 36px; height: 36px; margin: 0 auto 6px; display: block; }
-  .dcard .dn { font-size: 12pt; font-weight: 800; }
-  .dcard .now { font-size: 9pt; margin-top: 6px; font-weight: 600; }
-  .dcard .tgt { font-size: 8pt; color: var(--muted); margin-top: 4px; }
-  .dcard .arrow { font-size: 12pt; color: var(--muted); margin: 4px 0; }
 
   .timing {
     display: grid;
@@ -302,19 +307,6 @@
   .probe .pitem svg { width: 22px; height: 22px; margin: 0 auto 4px; display: block; }
   .probe .pitem .cmd { font-family: var(--mono); font-size: 7pt; color: var(--muted); margin-top: 2px; }
 
-  .tags {
-    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;
-  }
-  .tagcard {
-    flex: 1 1 160px;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 10px;
-    text-align: center;
-  }
-  .tagcard .name { font-family: var(--mono); font-size: 8pt; font-weight: 700; }
-  .tagcard .desc { font-size: 7.5pt; color: var(--muted); margin-top: 2px; }
-
   .warn-strip {
     display: flex; align-items: center; justify-content: center; gap: 10px;
     padding: 8px; border-radius: 8px;
@@ -330,24 +322,6 @@
     margin-bottom: 10px; font-size: 8.5pt; font-weight: 600; color: var(--d2);
   }
 
-  .rtt-box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    padding: 14px;
-    border: 2px solid var(--d2);
-    border-radius: 12px;
-    background: var(--d2-bg);
-    margin-bottom: 12px;
-  }
-  .rtt-box .seg {
-    text-align: center;
-    min-width: 90px;
-  }
-  .rtt-box .seg .nm { font-size: 8pt; font-weight: 700; color: var(--d2); }
-  .rtt-box .seg .fm { font-family: var(--mono); font-size: 9pt; margin-top: 4px; }
-  .rtt-box .plus { font-size: 18pt; font-weight: 700; color: var(--muted); }
 
   /* Page 1 — lifeline sequence diagram (mermaid-style) */
   .timeline-axis {
@@ -511,7 +485,7 @@
   <header class="page-header">
     <div>
       <h1>整體資料流 · 通訊延遲</h1>
-      <div class="sub">搖桿 → mux → FC · QGC 指令／遙測 · VS680 ↔ Godwit · Baseline-Mux-Eth-HTL · 2026-07-31（含晚間重測）</div>
+      <div class="sub">搖桿 → mavlink-router（板端 MAVLink 轉發／搖桿注入）→ FC · QGC 指令／遙測 · VS680 ↔ Godwit · Baseline-Mux-Eth-HTL · 2026-07-31（含晚間重測）</div>
     </div>
     <div class="legend">
       <span><i class="swatch d1"></i> D1 VS680 / mux</span>
@@ -519,7 +493,7 @@
     </div>
   </header>
 
-  <h2>整體資料流 <span class="tag d1">P1 總圖</span></h2>
+  <h2>整體資料流 <span class="tag d1">P1 總圖</span><span class="tag mux">mavlink-router：板端轉發／注入程序</span></h2>
 
   <div class="timeline-axis" aria-label="資料流時間節點">
     <div class="timebox t0">T0</div>
@@ -529,7 +503,7 @@
     <div class="timebox t4">T4</div>
   </div>
 
-  <div class="seq-diagram-wrap" role="img" aria-label="序列圖：USB搖桿 HID T0 至 mavlink_mux T1 至 eth0 UDP 至 FC；遙測經 mux 回 QGC HUD">
+  <div class="seq-diagram-wrap" role="img" aria-label="序列圖：USB搖桿 HID T0 至 mavlink-router（板端 MAVLink 轉發／搖桿注入程序）T1 至 eth0 UDP 至 FC；遙測經 router 回 QGC HUD">
     <svg viewBox="0 0 660 320" xmlns="http://www.w3.org/2000/svg" font-family="Noto Sans TC, Microsoft JhengHei, Segoe UI, sans-serif">
       <defs>
         <marker id="m-down" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
@@ -563,8 +537,8 @@
       <text x="195" y="38" text-anchor="middle" font-size="8" font-family="Consolas,monospace" fill="#64748b">:14551</text>
 
       <rect x="280" y="8" width="100" height="36" rx="6" fill="#fff" stroke="#2563eb" stroke-width="1.5"/>
-      <text x="330" y="26" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a">mavlink_mux</text>
-      <text x="330" y="38" text-anchor="middle" font-size="8" font-family="Consolas,monospace" fill="#64748b">:14550</text>
+      <text x="330" y="26" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a">mavlink-router</text>
+      <text x="330" y="38" text-anchor="middle" font-size="7.2" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" fill="#64748b">:14550 · 轉發／注入</text>
 
       <rect x="415" y="8" width="100" height="36" rx="6" fill="#fff" stroke="#2563eb" stroke-width="1.5"/>
       <text x="465" y="26" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a">eth0</text>
@@ -624,34 +598,34 @@
   </div>
 
   <table class="data compact p1-summary">
-    <tr><th>事件</th><th>區間</th><th>方向</th><th>段落</th><th>量測方式／指標</th><th>P50</th><th>P95</th><th>狀態</th></tr>
+    <tr><th>事件</th><th>區間</th><th>方向</th><th>段落</th><th>量測方式／指標</th><th>平均延遲</th></tr>
     <tr class="flow-down">
-      <td class="flow-event">Arm/Takeoff</td><td class="flow-range">T1 → T2</td><td>下行</td><td>QGC → mavlink_mux</td><td class="mono">QGC command log ↔ mux -L</td>
-      <td class="tbd">—</td><td class="tbd">—</td><td class="tbd">事件對齊</td>
+      <td class="flow-event">Arm/Takeoff</td><td class="flow-range">T1 → T2</td><td>下行</td><td>QGC → mavlink-router</td><td>看 QGC 發出指令，到 router 記錄收到</td>
+      <td class="tbd">—</td>
     </tr>
     <tr class="flow-down">
-      <td class="flow-event">HID</td><td class="flow-range">T0 → T2</td><td>下行</td><td>USB 搖桿 → mavlink_mux</td><td class="mono">getevent -lt ↔ mux -L<br>L_cmd dense 重測 n=846</td>
-      <td class="mono">5.1 ms</td><td class="mono">40.9 ms</td><td>重測 Done</td>
+      <td class="flow-event">HID</td><td class="flow-range">T0 → T2</td><td>下行</td><td>USB 搖桿 → mavlink-router</td><td>看搖桿動作，到 router 送出指令<br>L_cmd 重測 n=846</td>
+      <td class="mono">10.8 ms</td>
     </tr>
     <tr class="flow-down">
-      <td class="flow-event">RC/MC inject</td><td class="flow-range">T2 → T3</td><td>下行</td><td>mavlink_mux → eth0</td><td class="mono">mux -L ↔ tcpdump eth0<br>L_cmd_eth</td>
-      <td class="tbd">—</td><td class="tbd">—</td><td class="tbd">待 eth0 pcap</td>
+      <td class="flow-event">RC/MC inject</td><td class="flow-range">T2 → T3</td><td>下行</td><td>mavlink-router → eth0</td><td>比對 router 送出，到 eth0 封包出去<br>L_cmd_eth</td>
+      <td class="tbd">—</td>
     </tr>
     <tr class="flow-down">
-      <td class="flow-event">UDP 下行</td><td class="flow-range">T3 → T4</td><td>下行</td><td>eth0 → Godwit FC</td><td class="mono">tcpdump eth0 ↔ FC receive</td>
-      <td class="tbd">—</td><td class="tbd">—</td><td class="tbd">待 FC 端探針</td>
+      <td class="flow-event">UDP 下行</td><td class="flow-range">T3 → T4</td><td>下行</td><td>eth0 → Godwit FC</td><td>比對 eth0 封包出去，到 FC 收到</td>
+      <td class="tbd">—</td>
     </tr>
     <tr class="flow-up">
-      <td class="flow-event">ATTITUDE</td><td class="flow-range">T4 → T3</td><td>上行</td><td>Godwit FC → eth0</td><td class="mono">FC ATTITUDE ↔ tcpdump eth0<br>L_telem_eth</td>
-      <td class="tbd">—</td><td class="tbd">—</td><td class="tbd">待 eth0 pcap</td>
+      <td class="flow-event">ATTITUDE</td><td class="flow-range">T4 → T3</td><td>上行</td><td>Godwit FC → eth0</td><td>比對 FC 送出 ATTITUDE，到 eth0 收到<br>L_telem_eth</td>
+      <td class="tbd">—</td>
     </tr>
     <tr class="flow-up">
-      <td class="flow-event">經 mux 上行</td><td class="flow-range">T3 → T1</td><td>上行</td><td>eth0 → QGC</td><td class="mono">tcpdump -tt ↔ QGC receive</td>
-      <td class="tbd">—</td><td class="tbd">—</td><td class="tbd">待量</td>
+      <td class="flow-event">經 router 上行</td><td class="flow-range">T3 → T1</td><td>上行</td><td>eth0 → QGC</td><td>比對 eth0 收到，到 QGC 收到</td>
+      <td class="tbd">—</td>
     </tr>
     <tr class="flow-up">
-      <td class="flow-event">HUD / 地圖軌跡</td><td class="flow-range">T1 → T1</td><td>上行</td><td>QGC 本機顯示</td><td class="mono">QGC HUD ↔ 錄影<br>L_telem_qgc</td>
-      <td class="tbd">—</td><td class="tbd">—</td><td class="tbd">待量</td>
+      <td class="flow-event">HUD / 地圖軌跡</td><td class="flow-range">T1 → T1</td><td>上行</td><td>QGC 本機顯示</td><td>比對 QGC 收到，到畫面更新<br>L_telem_qgc</td>
+      <td class="tbd">—</td>
     </tr>
   </table>
 
@@ -706,138 +680,102 @@
     </div>
   </div>
 
-  <h2>量測域（僅兩端）</h2>
-  <div class="domain-map">
-    <div class="dcard d1">
-      <svg style="color:var(--d1)"><use href="#i-gamepad"/></svg>
-      <div class="dn" style="color:var(--d1)">D1</div>
-      <div class="now">HID → mux → eth0 出</div>
-      <div class="arrow">↓</div>
-      <div class="tgt">Target：同（VS680 軟體）</div>
-    </div>
-    <div class="dcard d2">
-      <svg style="color:var(--d2)"><use href="#i-eth"/></svg>
-      <div class="dn" style="color:var(--d2)">D2</div>
-      <div class="now">eth0 ↔ 飛控 eth</div>
-      <div class="arrow">↓</div>
-      <div class="tgt">Target：空口／RF ↔ 飛控</div>
-    </div>
-  </div>
-
-  <div class="rtt-box" aria-label="來回組成">
-    <div class="seg">
-      <svg width="28" height="28" style="color:var(--d1);display:block;margin:0 auto 4px"><use href="#i-gamepad"/></svg>
-      <div class="nm">D1 下行</div>
-      <div class="fm">L_cmd_board</div>
-    </div>
-    <div class="plus">+</div>
-    <div class="seg">
-      <svg width="28" height="28" style="color:var(--d2);display:block;margin:0 auto 4px"><use href="#i-rtt"/></svg>
-      <div class="nm">D2 來回</div>
-      <div class="fm">L_cmd_eth + L_telem_eth</div>
-    </div>
-    <div class="plus">+</div>
-    <div class="seg">
-      <svg width="28" height="28" style="color:var(--d1);display:block;margin:0 auto 4px"><use href="#i-qgc"/></svg>
-      <div class="nm">D1 上行</div>
-      <div class="fm">L_telem_qgc</div>
-    </div>
-  </div>
-
-  <div class="tags">
-    <div class="tagcard">
-      <svg width="24" height="24" style="color:var(--d2);margin:0 auto 4px;display:block"><use href="#i-eth"/></svg>
-      <div class="name">Baseline-Mux-Eth-HTL</div>
-      <div class="desc">現況 · mux 搖桿注入 + eth0</div>
-    </div>
-    <div class="tagcard">
-      <svg width="24" height="24" style="color:#4338ca;margin:0 auto 4px;display:block"><use href="#i-rf"/></svg>
-      <div class="name">Baseline-Product</div>
-      <div class="desc">中期 · VS680 ↔ 無人機空口</div>
-    </div>
-  </div>
-
   <h2>公開參考對照 <span class="tag d2">不可直接相減</span></h2>
   <div class="ref-note">
-    公開數字多為 RF「搖桿→接收機→飛控」；本報告 Now 為「HID→mavlink_mux→eth」。路徑不同，僅作數量級／Target 參考。
+    <span class="source-key rf">公開 RF</span><span class="source-key uav">公開 UAV</span><span class="source-key mux">現行 Mux-Eth</span><span class="source-key qgc">官方方法／QGC</span>
+    僅納入可追溯來源；單向、RTT、週期與實際作動延遲不可直接相減。
   </div>
   <table class="data ref compact">
     <tr>
       <th>類別</th>
       <th>路徑</th>
-      <th>典型延遲</th>
-      <th>對應本報告</th>
+      <th>延遲資訊</th>
       <th>用途</th>
+      <th>來源</th>
     </tr>
-    <tr class="flow-down">
+    <tr class="ref-rf">
       <td>ELRS 500–1000 Hz</td>
       <td>RF 下行 stick→FC</td>
       <td class="mono">≈1.5–4 ms</td>
-      <td>未來 Baseline-Product 控鏈</td>
       <td>競速／低延遲目標</td>
+      <td class="source"><a href="https://blog.wildair.ch/drone-rc-protocols/">公開整理</a></td>
     </tr>
-    <tr class="flow-down">
+    <tr class="ref-rf">
       <td>ELRS 250 Hz／Tracer／Ghost</td>
       <td>RF 下行</td>
       <td class="mono">≈4–10 ms</td>
-      <td>同上</td>
       <td>一般 FPV 手感</td>
+      <td class="source"><a href="https://blog.wildair.ch/drone-rc-protocols/">公開整理</a></td>
     </tr>
-    <tr class="flow-down">
+    <tr class="ref-rf">
       <td>Crossfire 150 Hz</td>
       <td>RF 下行</td>
       <td class="mono">≈8–15 ms</td>
-      <td>同上</td>
       <td>長距 RF 常見</td>
+      <td class="source"><a href="https://blog.wildair.ch/drone-rc-protocols/">公開整理</a></td>
     </tr>
-    <tr class="flow-down">
+    <tr class="ref-rf">
       <td>ELRS／CF 長距 50 Hz</td>
       <td>RF 下行</td>
       <td class="mono">≈18–22 ms</td>
-      <td>同上</td>
       <td>遠距可接受</td>
+      <td class="source"><a href="https://blog.wildair.ch/drone-rc-protocols/">公開整理</a></td>
     </tr>
-    <tr class="flow-down">
+    <tr class="ref-uav">
+      <td>Joystick 直控</td>
+      <td>Joystick → aircraft actuator</td>
+      <td class="mono">160–170 ms</td>
+      <td>實際 stick-to-actuator；單向</td>
+      <td class="source"><a href="https://elib.dlr.de/192975/1/570296.pdf">DLR PDF</a></td>
+    </tr>
+    <tr class="ref-uav">
+      <td>Joystick 輔助模式</td>
+      <td>Joystick → aircraft actuator</td>
+      <td class="mono">180–190 ms</td>
+      <td>實際 stick-to-actuator；單向</td>
+      <td class="source"><a href="https://elib.dlr.de/192975/1/570296.pdf">DLR PDF</a></td>
+    </tr>
+    <tr class="ref-uav">
+      <td>4G UAV 控制</td>
+      <td>RC input → UAV control</td>
+      <td class="mono">97.3 ms<br>95% CI 95.5–99.1</td>
+      <td>控制鏈路；單向，不是 RTT</td>
+      <td class="source"><a href="https://www.mdpi.com/2504-446X/9/12/812">MDPI</a></td>
+    </tr>
+    <tr class="ref-method">
+      <td>MAVLink PING</td>
+      <td>GCS／VS680 ↔ FC</td>
+      <td class="mono">可計算 RTT</td>
+      <td>封包 RTT 方法；無固定公開數字</td>
+      <td class="source"><a href="https://mavlink.io/en/services/ping.html">MAVLink</a></td>
+    </tr>
+    <tr class="ref-method">
+      <td>QGC Joystick</td>
+      <td>QGC → vehicle MAVLink</td>
+      <td class="mono">25 Hz<br>≈40 ms 週期</td>
+      <td>發送週期；不是端到端延遲</td>
+      <td class="source"><a href="https://docs.qgroundcontrol.com/master/en/qgc-user-guide/setup_view/joystick.html">QGC</a></td>
+    </tr>
+    <tr class="ref-mux">
       <td><strong>本次 Mux-Eth-HTL</strong></td>
-      <td>HID→mux→eth（dense 基線）</td>
-      <td class="mono"><strong>P50 5.3 / P95 56.2 ms</strong></td>
-      <td class="mono">L_cmd n=1000</td>
-      <td>正式基線 · latency-mux-n1000-latest</td>
+      <td>HID→mux send_stick（T0→T1）</td>
+      <td class="mono"><strong>平均 13.1 ms</strong></td>
+      <td>正式基線 · n=1000</td>
+      <td class="source"><a href="../../test/evidence/mux-path/dense-n1000/latency-mux-n1000-latest/summary.md">本專案 evidence</a></td>
     </tr>
-    <tr class="flow-down">
+    <tr class="ref-mux">
       <td><strong>重測 Mux-Eth-HTL</strong></td>
-      <td>HID→mux→eth（dense 18:05）</td>
-      <td class="mono"><strong>P50 5.1 / P95 40.9 ms</strong></td>
-      <td class="mono">L_cmd n=846 · mean 10.8</td>
-      <td>2026-07-31 晚間重跑確認</td>
+      <td>HID→mux send_stick（T0→T1，重測）</td>
+      <td class="mono"><strong>平均 10.8 ms</strong></td>
+      <td>晚間重測 · n=846</td>
+      <td class="source"><a href="../../test/evidence/mux-path/dense-n1000/latency-mux-n1000-20260731-180536/summary.md">本專案 evidence</a></td>
     </tr>
-    <tr class="flow-down">
-      <td><strong>本次 Mux-Eth-HTL</strong></td>
-      <td>HID edge→mux send</td>
-      <td class="mono"><strong>P50 8.7 / P95 17.9 ms</strong></td>
-      <td class="mono">L_cmd_edge n=22</td>
-      <td>猛推邊緣對齊</td>
-    </tr>
-    <tr class="flow-down">
+    <tr class="ref-qgc">
       <td>歷史 QGC 路徑</td>
-      <td>HID→QGC→eth MC</td>
-      <td class="mono">P50 97.6 / P95 310.9 ms</td>
-      <td class="mono">L_cmd_board（舊）</td>
-      <td>對照用；非現行</td>
-    </tr>
-    <tr class="flow-up">
-      <td>歷史 Eth-HTL</td>
-      <td>MC 出→ATTITUDE 回</td>
-      <td class="mono">P50 59.3 / P95 98.4 ms</td>
-      <td class="mono">L_rtt*</td>
-      <td>含遙測週期≈10 Hz</td>
-    </tr>
-    <tr>
-      <td>mux 送杆週期</td>
-      <td>軟體 50 Hz</td>
-      <td class="mono">≈20 ms 上限</td>
-      <td>L_cmd 下限／週期</td>
-      <td>poll 5 ms + rate</td>
+      <td>HID→QGC→eth MC（舊路徑）</td>
+      <td class="mono">平均 122.7 ms</td>
+      <td>歷史對照 · n=22</td>
+      <td class="source"><a href="../../../Pro_RC_VS680_QGC_RealDrone_USB/test/evidence/qgc-path/20260731-latency-eth-htl/summary.md">歷史 evidence</a></td>
     </tr>
   </table>
   <p class="src" style="font-size:6.5pt;color:var(--muted);margin:2px 0 0">
@@ -857,7 +795,7 @@
   <header class="page-header">
     <div>
       <h1>D1 VS680 耗時</h1>
-      <div class="sub">P1 上半段展開 · 搖桿 → mavlink_mux → eth0 出</div>
+      <div class="sub">P1 上半段展開 · 搖桿 → mavlink-router → eth0 出</div>
     </div>
     <div class="legend">
       <span><i class="swatch d1"></i> D1 焦點</span>

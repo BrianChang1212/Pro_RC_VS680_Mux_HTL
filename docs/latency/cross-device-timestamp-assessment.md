@@ -1,7 +1,7 @@
 # 跨設備資料流事件時間記錄判定
 
 > 判定日期：2026-08-02
-> 適用路徑：VS680／SL1680 Android 主板 + Godwit FC + mavlink_mux + QGC
+> 適用路徑：VS680／SL1680 Android 主板 + Godwit FC + mavlink-router + QGC
 
 ## 硬體與通訊前提
 
@@ -12,8 +12,8 @@
 5. 現行資料路徑為：
 
 ```text
-USB HID → mavlink_mux :14550 → VS680 eth0 → FC Ethernet
-FC Ethernet → VS680 eth0 → mavlink_mux → QGC :14551 → HUD
+USB HID → mavlink-router :14550 → VS680 eth0 → FC Ethernet
+FC Ethernet → VS680 eth0 → mavlink-router → QGC :14551 → HUD
 ```
 
 FC USB COM 主要用於寫入 `NET_*` 參數、MAVLink 設定與診斷；`adb shell` 只控制 VS680 Android，不代表 FC 內部執行時間。
@@ -24,8 +24,8 @@ FC USB COM 主要用於寫入 `NET_*` 參數、MAVLink 設定與診斷；`adb sh
 
 | 資料段 | 事件時間 | 目前能否直接計算延遲 | 需要的條件 |
 |---|---|---|---|
-| USB HID → mavlink_mux | 可以 | 可以 | `getevent -lt` + mux `-L`，同為 VS680 `CLOCK_MONOTONIC` |
-| mavlink_mux → VS680 eth0 發送 | 可以 | 尚未完成 | mux `sendto()` 前記錄時間、封包序號，並與 eth0 pcap 配對 |
+| USB HID → mavlink-router | 可以 | 可以 | `getevent -lt` + router `-L`，同為 VS680 `CLOCK_MONOTONIC` |
+| mavlink-router → VS680 eth0 發送 | 可以 | 尚未完成 | router `sendto()` 前記錄時間、封包序號，並與 eth0 pcap 配對 |
 | VS680 eth0 → FC 收到 UDP | FC 端可記錄 | 目前不行 | FC firmware 在 UDP receive/command handler 加探針 |
 | FC 產生 ATTITUDE → eth0 發送 | FC 端可記錄 | 目前不行 | FC firmware 在 ATTITUDE 產生或送出處加探針 |
 | VS680 eth0 收到 ATTITUDE → mux/QGC | 可以 | 可以加量 | VS680 端使用共同 monotonic 時鐘記錄 receive、forward、QGC receive |
@@ -41,13 +41,13 @@ FC USB COM 主要用於寫入 `NET_*` 參數、MAVLink 設定與診斷；`adb sh
 
 ## Repo 現況證據
 
-- `docs/mux/architecture.md` 定義 VS680 eth0、mavlink_mux、QGC 與 FC Ethernet 拓樸，FC USB 只作參數設定，ADB 連主板。
+- `docs/mux/architecture.md` 定義 VS680 eth0、mavlink-router、QGC 與 FC Ethernet 拓樸，FC USB 只作參數設定，ADB 連主板。
 - `docs/latency/joystick-latency-plan.md` 已完成 `T0 → T1`；`T2−T1`、`T3−T2`、`T4−T3` 仍列為 pending。
 - 現有 evidence 的 `L_cmd` 是 HID 到 mux 的同時鐘量測，不是完整 HID 到 FC 的端到端延遲。
 
 ## 建議的完整量測方案
 
-1. 在 `mavlink_mux` `sendto()` 前記錄 `T2`、MAVLink sequence/封包識別資訊。
+1. 在 `mavlink-router` `sendto()` 前記錄 `T2`、MAVLink sequence/封包識別資訊。
 2. 在 FC firmware 的 UDP receive 與 ATTITUDE transmit 路徑分別記錄 `T3` 與 `T4_send`。
 3. 在 VS680 eth0 記錄封包收到時間 `T4_receive`，優先確認 Android kernel/libpcap 的 timestamp clock domain；必要時改用 `SO_TIMESTAMPNS` 或 `SO_TIMESTAMPING`。
 4. 以 MAVLink `TIMESYNC` 或明確的雙端 clock offset 校正 FC 與 VS680 時間。

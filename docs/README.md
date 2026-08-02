@@ -1,6 +1,6 @@
-# docs/ — Mux HTL（系統 mavlink_mux）
+# docs/ — Mux HTL（系統 mavlink-router）
 
-> **本專案 SSOT：搖桿走板端 `mavlink_mux`。**  
+> **本專案 SSOT：搖桿走板端 `mavlink-router`。**
 > 經 QGC 搖桿文件 → [`../../20260730_Accton_Pro_RC_VS680_QGC_RealDrone_USB/docs/`](../../20260730_Accton_Pro_RC_VS680_QGC_RealDrone_USB/docs/)
 
 ## 分類

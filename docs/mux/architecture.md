@@ -1,6 +1,6 @@
 ﻿# 架構：VS680 QGC ↔ 實體無人機
 
-> 更新：2026-07-31 · **唯一支援路徑 = eth0 + mavlink_mux（HTL）**
+> 更新：2026-07-31 · **唯一支援路徑 = eth0 + mavlink-router（HTL）**
 
 ## 拓樸 — eth0 + mux（唯一路徑）
 
@@ -11,7 +11,7 @@ flowchart LR
   end
   subgraph Board["VS680 Astra"]
     ETH_B["eth0 192.168.144.20"]
-    MUX["mavlink_mux :14550"]
+    MUX["mavlink-router :14550"]
     QGC["QGC UDP :14551"]
     JOY["USB 搖桿 HID"]
     JOY -->|"RC override + MC"| MUX
@@ -27,6 +27,12 @@ flowchart LR
 飛控 eth :* ↔ VS680 eth0:14550 (mux) ↔ QGC 127.0.0.1:14551   ← 遙測／Arm／Takeoff／RTL／Loiter…
 搖桿 HID → mux 注入 RC_CHANNELS_OVERRIDE + MANUAL_CONTROL（離中位時）→ 飛控
 ```
+
+本文件中的 **`mavlink-router`** 是板端 MAVLink 轉發／搖桿注入程序：
+
+- 轉發 FC Ethernet `:14550` 與 QGC loopback `:14551` 之間的 MAVLink 遙測與指令。
+- 將板端 USB HID 搖桿轉成 `MANUAL_CONTROL`／`RC_CHANNELS_OVERRIDE`，再送往 FC。
+- 公開參考：[mavlink-router](https://github.com/mavlink-router/mavlink-router)。
 
 一鍵 eth bring-up：[`../../tool/bring-up/setup-eth-htl.ps1`](../../tool/bring-up/setup-eth-htl.ps1)  
 搖桿／飛行 UX：[`../../tool/start-with-qgc.ps1`](../../tool/start-with-qgc.ps1)（mux `:14550`，QGC `:14551`）或 [`../../tool/start-no-qgc.ps1`](../../tool/start-no-qgc.ps1)
