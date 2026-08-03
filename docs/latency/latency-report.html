@@ -731,7 +731,7 @@
   </div>
   <div class="flow-total">
     <span class="label">本案操控延遲（實測：搖桿 → 飛控）</span>
-    <span class="value">9.50 ms</span>
+    <span class="value">9.09 ms</span>
   </div>
   <table class="data compact p1-summary">
     <tr><th>事件</th><th>區間</th><th>方向</th><th>段落</th><th>量測方式／指標</th><th>平均延遲</th></tr>
@@ -740,8 +740,8 @@
       <td class="mono">Non</td>
     </tr>
     <tr class="flow-down">
-      <td class="flow-event">HID</td><td class="flow-range">T0 → T2</td><td>下行</td><td>USB 搖桿 → mavlink-router</td><td>200 Hz 實測 HID → router 平均 3.01 ms；n=35</td>
-      <td class="mono">3.01 ms</td>
+      <td class="flow-event">HID</td><td class="flow-range">T0 → T2</td><td>下行</td><td>USB 搖桿 → mavlink-router</td><td>200 Hz、poll=1 ms 實測 HID → router 平均 2.60 ms；n=37</td>
+      <td class="mono">2.60 ms</td>
     </tr>
     <tr class="flow-down">
       <td class="flow-event">遙控訊息注入（RC／MC）</td><td class="flow-range">T2 → T3</td><td>下行</td><td>mavlink-router → FC（實體網路線 ETH）</td><td>ETH pcap 觀察 MANUAL_CONTROL 輸出封包間隔；平均 6.49 ms；不是 FC 接收延遲</td>
@@ -835,7 +835,7 @@
     <tr class="ref-mux">
       <td>本案量測</td>
       <td>搖桿 → 飛控</td>
-      <td class="mono">9.50 ms / Non</td>
+      <td class="mono">9.09 ms / Non</td>
       <td>鏈路參考值，非 FC 內部控制迴圈延遲</td>
       <td class="source"><a href="../../test/evidence/all-flow-20260803-101733/summary-pcap.md">本案證據</a></td>
     </tr>
