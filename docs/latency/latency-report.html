@@ -745,16 +745,6 @@
       <td class="tbd">Non</td>
     </tr>
   </table>
-  <div class="ref-local-note">
-    <strong>* 時間註記：</strong>Arm/Takeoff 欄位使用 generic QGC command forwarding 補測，未捕捉到實際 Arm `cmd=400` 或 Takeoff `cmd=22`；
-    200 Hz 遙控訊息注入的 6.49 ms 是 ETH 可見 MANUAL_CONTROL 封包間隔平均值；此數值不是 FC 接收延遲。
-    這些數字可作為鏈路參考，不是嚴格的 FC receive/control-loop 單向延遲。
-  </div>
-
-  <div class="ref-local-note">
-    200 Hz 本案參考：HID→mux 平均 3.01 ms，加上 mux→FC 的 MANUAL_CONTROL 封包間隔平均 6.49 ms，合計平均 9.50 ms。此合計值為參考值，不是同步的 FC 接收端到端量測。
-  </div>
-
   <footer class="page-footer">
     <span>整體資料流 · Baseline-Mux-Eth-HTL · P2 總圖 → P3 Now／Target</span>
     <span>頁 2 / 3</span>
