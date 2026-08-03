@@ -63,4 +63,16 @@
 - Average reference: 3.011 ms + 6.49 ms = 9.501 ms, shown as 9.50 ms.
 - This reference sum is not a synchronized end-to-end FC receive measurement.
 - The report now uses the 200 Hz reference for the current measurement table; synchronized FC receive timing is still unavailable.
+
+## 2026-08-03 poll timeout comparison
+
+- [x] Change native `mavlink_mux` `poll()` timeout from 5 ms to 1 ms.
+- [x] Rebuild the native mux and run a 60-second 200 Hz capture on the real device.
+- Evidence: `test/evidence/latency-mux-200hz-poll1ms-20260803/`.
+
+### Review
+
+- poll=5 ms baseline: n=35, mean 3.01 ms, P50 4.03 ms, P95 5.10 ms, max 5.11 ms.
+- poll=1 ms: n=37, mean 2.60 ms, P50 2.20 ms, P95 5.12 ms, max 5.25 ms.
+- Average and P50 improved, but P95 and maximum did not improve; keep the result as preliminary until longer repeated captures are completed.
 - These are preliminary HID→mux measurements with small edge counts; do not replace the all-flow 35.85 ms reference yet.

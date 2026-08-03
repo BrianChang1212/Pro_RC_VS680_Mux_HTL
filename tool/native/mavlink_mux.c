@@ -459,7 +459,7 @@ int main(int argc, char **argv)
 		pfds[nfds].events = POLLIN;
 		nfds++;
 
-		pr = poll(pfds, nfds, 5);
+		pr = poll(pfds, nfds, 1);
 		if (pr < 0) {
 			if (errno == EINTR)
 				continue;
