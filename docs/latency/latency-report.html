@@ -675,7 +675,7 @@
       <!-- 1: QGC app command → mux -->
       <line x1="195" y1="68" x2="459" y2="68" stroke="#d97706" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#m-gray)"/>
       <rect x="260" y="54" width="100" height="16" rx="3" fill="#fff7ed" stroke="#fdba74"/>
-      <text x="310" y="66" text-anchor="middle" font-size="7.5" font-weight="600" fill="#c2410c">Arm/Takeoff · T1→T3</text>
+      <text x="310" y="66" text-anchor="middle" font-size="7.5" font-weight="600" fill="#c2410c">Arm/Takeoff · T1→T2→T3</text>
 
       <!-- 2: HID 搖桿 → mux -->
       <line x1="60" y1="100" x2="155" y2="100" stroke="#d97706" stroke-width="2"/>
@@ -717,7 +717,7 @@
   <table class="data compact p1-summary">
     <tr><th>事件</th><th>區間</th><th>方向</th><th>段落</th><th>量測方式／指標</th><th>平均延遲</th></tr>
     <tr class="flow-down">
-      <td class="flow-event">Arm/Takeoff</td><td class="flow-range">T1 → T3</td><td>下行</td><td>QGC → mavlink-router → FC</td><td>看 QGC command 到 router，再轉送 FC<br>generic cmd n=32；Arm/Takeoff 未捕捉</td>
+      <td class="flow-event">Arm/Takeoff</td><td class="flow-range">T1 → T2 → T3</td><td>下行</td><td>QGC → mavlink-router → FC</td><td>看 QGC command 到 router，再轉送 FC<br>generic cmd n=32；Arm/Takeoff 未捕捉</td>
       <td class="mono">Non</td>
     </tr>
     <tr class="flow-down">
