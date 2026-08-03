@@ -14,6 +14,7 @@ param(
     [string]$Axis = "ABS_Y",
     [ValidateSet("x", "y", "z", "r")]
     [string]$McAxis = "x",
+    [int]$HidThreshold = 20,
     [string]$RemoteLat = "/data/local/tmp/mux_stick_lat.log",
     [string]$OutDir = ""
 )
@@ -58,7 +59,7 @@ Write-Host ("pulled getevent={0} latlog={1}" -f (Get-Item $localGet).Length, (Ge
 
 $py = Join-Path $LatDir "analyze_joystick_latency.py"
 $csv = Join-Path $OutDir "samples.csv"
-python $py --getevent $localGet --mux-log $localLat --axis $Axis --mc-axis $McAxis --hid-threshold 8000 --mc-threshold 100 --min-gap 1.5 --match-window 0.25 --csv $csv | Tee-Object -FilePath (Join-Path $OutDir "analyze.log")
+python $py --getevent $localGet --mux-log $localLat --axis $Axis --mc-axis $McAxis --hid-threshold $HidThreshold --mc-threshold 100 --min-gap 1.5 --match-window 0.25 --csv $csv | Tee-Object -FilePath (Join-Path $OutDir "analyze.log")
 
 @(
     "# Joy -> FC latency (mux path)",
@@ -68,6 +69,7 @@ python $py --getevent $localGet --mux-log $localLat --axis $Axis --mc-axis $McAx
     "- T0: getevent -lt",
     "- T1: mux -L log at send_stick",
     "- Axis: HID $Axis <-> MC $McAxis",
+    "- HID threshold: $HidThreshold",
     "- Duration: ${Seconds}s"
 ) -join "`n" | Set-Content -Path (Join-Path $OutDir "README.md") -Encoding utf8
 Write-Host "Done: $OutDir"

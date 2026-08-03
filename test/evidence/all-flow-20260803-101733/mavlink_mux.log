@@ -1,0 +1,37 @@
+latency log /data/local/tmp/allflow_lat.log (CLOCK_MONOTONIC)
+mavlink_mux: FC :14550 <-> QGC 127.0.0.1:14551 (mux gcs :14552)
+  joy /dev/input/event1 -> MANUAL_CONTROL @ 50 Hz
+fc -:0 fwd_fc=0 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=91 fwd_gcs=0 mc=43 raw x=98 y=3 z=74 rz=244 out xy=976,-234
+fc 192.168.144.14:62510 fwd_fc=182 fwd_gcs=0 mc=88 raw x=128 y=0 z=61 rz=237 out xy=1000,0
+fc 192.168.144.14:62510 fwd_fc=273 fwd_gcs=0 mc=134 raw x=255 y=134 z=95 rz=4 out xy=-46,992
+fc 192.168.144.14:62510 fwd_fc=364 fwd_gcs=0 mc=172 raw x=151 y=178 z=128 rz=128 out xy=-390,179
+fc 192.168.144.14:62510 fwd_fc=455 fwd_gcs=0 mc=211 raw x=86 y=6 z=123 rz=255 out xy=953,-328
+fc 192.168.144.14:62510 fwd_fc=546 fwd_gcs=0 mc=256 raw x=152 y=82 z=128 rz=128 out xy=359,187
+fc 192.168.144.14:62510 fwd_fc=637 fwd_gcs=0 mc=301 raw x=232 y=202 z=128 rz=128 out xy=-578,812
+fc 192.168.144.14:62510 fwd_fc=728 fwd_gcs=0 mc=344 raw x=239 y=191 z=128 rz=128 out xy=-492,867
+fc 192.168.144.14:62510 fwd_fc=820 fwd_gcs=0 mc=366 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=911 fwd_gcs=0 mc=400 raw x=92 y=5 z=128 rz=128 out xy=960,-281
+fc 192.168.144.14:62510 fwd_fc=1002 fwd_gcs=0 mc=441 raw x=127 y=151 z=128 rz=128 out xy=-179,-7
+fc 192.168.144.14:62510 fwd_fc=1093 fwd_gcs=0 mc=483 raw x=31 y=75 z=128 rz=128 out xy=414,-757
+fc 192.168.144.14:62510 fwd_fc=1184 fwd_gcs=0 mc=525 raw x=62 y=78 z=128 rz=128 out xy=390,-515
+fc 192.168.144.14:62510 fwd_fc=1275 fwd_gcs=0 mc=559 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=1366 fwd_gcs=0 mc=602 raw x=83 y=8 z=128 rz=128 out xy=937,-351
+fc 192.168.144.14:62510 fwd_fc=1457 fwd_gcs=0 mc=638 raw x=227 y=208 z=128 rz=128 out xy=-625,773
+fc 192.168.144.14:62510 fwd_fc=1548 fwd_gcs=0 mc=673 raw x=182 y=58 z=128 rz=128 out xy=546,421
+fc 192.168.144.14:62510 fwd_fc=1641 fwd_gcs=0 mc=709 raw x=177 y=10 z=128 rz=128 out xy=921,382
+fc 192.168.144.14:62510 fwd_fc=1733 fwd_gcs=0 mc=744 raw x=115 y=0 z=128 rz=128 out xy=1000,-101
+fc 192.168.144.14:62510 fwd_fc=1824 fwd_gcs=0 mc=786 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=1915 fwd_gcs=0 mc=820 raw x=221 y=215 z=128 rz=128 out xy=-679,726
+fc 192.168.144.14:62510 fwd_fc=2006 fwd_gcs=0 mc=854 raw x=202 y=101 z=128 rz=128 out xy=210,578
+fc 192.168.144.14:62510 fwd_fc=2097 fwd_gcs=0 mc=891 raw x=100 y=3 z=128 rz=128 out xy=976,-218
+fc 192.168.144.14:62510 fwd_fc=2188 fwd_gcs=0 mc=931 raw x=188 y=15 z=163 rz=229 out xy=882,468
+fc 192.168.144.14:62510 fwd_fc=2279 fwd_gcs=0 mc=977 raw x=127 y=113 z=229 rz=50 out xy=117,-7
+fc 192.168.144.14:62510 fwd_fc=2370 fwd_gcs=0 mc=1024 raw x=98 y=115 z=224 rz=43 out xy=101,-234
+fc 192.168.144.14:62510 fwd_fc=2461 fwd_gcs=0 mc=1069 raw x=185 y=46 z=128 rz=128 out xy=640,445
+fc 192.168.144.14:62510 fwd_fc=2552 fwd_gcs=0 mc=1108 raw x=142 y=0 z=128 rz=128 out xy=1000,109
+fc 192.168.144.14:62510 fwd_fc=2644 fwd_gcs=0 mc=1153 raw x=155 y=3 z=128 rz=128 out xy=976,210
+fc 192.168.144.14:62510 fwd_fc=2735 fwd_gcs=0 mc=1198 raw x=172 y=95 z=128 rz=128 out xy=257,343
+fc 192.168.144.14:62510 fwd_fc=2830 fwd_gcs=0 mc=1243 raw x=125 y=44 z=128 rz=128 out xy=656,-23
+fc 192.168.144.14:62510 fwd_fc=2921 fwd_gcs=0 mc=1288 raw x=95 y=4 z=128 rz=128 out xy=968,-257
+exit fwd_fc=2936 fwd_gcs=0 mc=1299

@@ -44,6 +44,9 @@
 #define STICK_DEADBAND_S16 800	/* signed abs axes idle band */
 #define CRC_EXTRA_MANUAL_CONTROL 243
 #define CRC_EXTRA_RC_CHANNELS_OVERRIDE 124
+#define MSGID_COMMAND_LONG 76
+#define MSGID_COMMAND_ACK 77
+#define MSGID_COMMAND_INT 75
 
 static volatile int g_run = 1;
 
@@ -157,6 +160,66 @@ static int is_loopback(const struct sockaddr_in *a)
 	uint32_t x = ntohl(a->sin_addr.s_addr);
 
 	return (x >> 24) == 127;
+}
+
+static double mono_now_s(void)
+{
+	struct timespec ts;
+
+	clock_gettime(CLOCK_MONOTONIC, &ts);
+	return (double)ts.tv_sec + (double)ts.tv_nsec / 1e9;
+}
+
+static void log_mavlink_commands(FILE *fp, const char *tag,
+				 const uint8_t *buf, ssize_t len)
+{
+	ssize_t i = 0;
+
+	if (!fp)
+		return;
+	while (i + 10 <= len) {
+		uint8_t plen;
+		uint8_t incompat;
+		ssize_t frame_len;
+		uint32_t msgid;
+		const uint8_t *payload;
+		int command = -1;
+		int result = -1;
+
+		if (buf[i] != 0xFD) {
+			i++;
+			continue;
+		}
+		plen = buf[i + 1];
+		incompat = buf[i + 2];
+		frame_len = 10 + plen + 2;
+		if (incompat & 0x01)
+			frame_len += 13;
+		if (i + frame_len > len)
+			break;
+		msgid = (uint32_t)buf[i + 7] |
+			((uint32_t)buf[i + 8] << 8) |
+			((uint32_t)buf[i + 9] << 16);
+		payload = &buf[i + 10];
+		if (msgid == MSGID_COMMAND_LONG && plen >= 30)
+			command = payload[28] | (payload[29] << 8);
+		else if (msgid == MSGID_COMMAND_INT && plen >= 35)
+			command = payload[33] | (payload[34] << 8);
+		else if (msgid == MSGID_COMMAND_ACK && plen >= 2) {
+			command = payload[0] | (payload[1] << 8);
+			if (plen >= 3)
+				result = payload[2];
+		}
+
+		if (msgid == MSGID_COMMAND_LONG || msgid == MSGID_COMMAND_INT ||
+		    msgid == MSGID_COMMAND_ACK) {
+			fprintf(fp,
+				"%s %.6f msgid=%u cmd=%d result=%d seq=%u sys=%u comp=%u\n",
+				tag, mono_now_s(), msgid, command, result,
+				buf[i + 4], buf[i + 5], buf[i + 6]);
+		}
+		i += frame_len;
+	}
 }
 
 static uint16_t stick_to_pwm(int16_t v)
@@ -431,6 +494,7 @@ int main(int argc, char **argv)
 					      MSG_DONTWAIT,
 					      (struct sockaddr *)&src,
 					      &slen)) > 0) {
+				log_mavlink_commands(lat_fp, "FC_RX", buf, nr);
 				if (!is_loopback(&src)) {
 					fc_peer = src;
 					have_fc = 1;
@@ -451,12 +515,15 @@ int main(int argc, char **argv)
 					      MSG_DONTWAIT,
 					      (struct sockaddr *)&src,
 					      &slen)) > 0) {
+				log_mavlink_commands(lat_fp, "GCS_RX", buf, nr);
 				if (!have_fc)
 					continue;
 				if (sendto(sock_fc, buf, (size_t)nr, 0,
 					   (const struct sockaddr *)&fc_peer,
-					   sizeof(fc_peer)) > 0)
+					   sizeof(fc_peer)) > 0) {
+					log_mavlink_commands(lat_fp, "GCS_TX", buf, nr);
 					n_fwd_gcs++;
+				}
 			}
 		}
 

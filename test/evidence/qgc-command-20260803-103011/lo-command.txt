@@ -1,0 +1,2 @@
+pcap=D:\Brian\projects\Accton_Pro_RC\20260731_Accton_Pro_RC_VS680_Mux_HTL\test\evidence\qgc-command-20260803-103011\lo.pcap packets=7153 hits=0
+summary: MANUAL_CONTROL=0 ATTITUDE=0

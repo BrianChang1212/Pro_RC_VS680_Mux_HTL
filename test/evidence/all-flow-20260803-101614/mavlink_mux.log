@@ -1,0 +1,27 @@
+latency log /data/local/tmp/allflow_lat.log (CLOCK_MONOTONIC)
+mavlink_mux: FC :14550 <-> QGC 127.0.0.1:14551 (mux gcs :14552)
+  joy /dev/input/event1 -> MANUAL_CONTROL @ 50 Hz
+fc -:0 fwd_fc=0 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=91 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=182 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=273 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=364 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=455 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=546 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=637 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=728 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=821 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=913 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=1004 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=1095 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=1186 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=1277 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=1368 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=1459 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=1550 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=1641 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=1732 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=1824 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=1915 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+fc 192.168.144.14:62510 fwd_fc=2006 fwd_gcs=0 mc=0 raw x=128 y=128 z=128 rz=128 out xy=0,0
+exit fwd_fc=2039 fwd_gcs=0 mc=0

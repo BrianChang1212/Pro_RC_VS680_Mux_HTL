@@ -423,10 +423,15 @@
     background: #fffbeb;
     color: #92400e;
   }
-  .timeline-axis .timebox.t4 {
+  .timeline-axis .timebox.t3 {
     border-color: #34d399;
     background: #ecfdf5;
     color: #047857;
+  }
+  .timeline-axis .timebox.t4 {
+    border-color: #94a3b8;
+    background: #f1f5f9;
+    color: #475569;
   }
   .seq-diagram-wrap {
     margin-bottom: 10px;
@@ -448,6 +453,17 @@
     border-top: 1px solid var(--line);
     background: #fff;
   }
+  .flow-total {
+    display: flex; justify-content: space-between; align-items: center;
+    margin: 0 0 8px; padding: 8px 10px;
+    border: 1px solid #f59e0b; border-left: 4px solid #b45309;
+    border-radius: 5px; background: #fffbeb; color: #78350f;
+  }
+  .flow-total .label { font-size: 8.5pt; font-weight: 700; }
+  .flow-total .value {
+    font-family: var(--mono); font-size: 11pt; font-weight: 800;
+    white-space: nowrap;
+  }
 
   table.compact { font-size: 7.5pt; margin-bottom: 8px; }
   table.compact th, table.compact td { padding: 4px 6px; }
@@ -463,6 +479,7 @@
     white-space: nowrap;
     color: #334155;
   }
+  table.p1-summary td:last-child { white-space: nowrap; }
   table.p1-summary tr.flow-down td { background: #fffbeb; }
   table.p1-summary tr.flow-down td:first-child { box-shadow: inset 3px 0 0 #b45309; }
   table.p1-summary tr.flow-up td { background: #eff6ff; }
@@ -598,34 +615,37 @@
     <div class="timebox t0">T0</div>
     <div class="timebox">T1</div>
     <div class="timebox">T2</div>
-    <div class="timebox">T3</div>
+    <div class="timebox t3">T3</div>
     <div class="timebox t4">T4</div>
   </div>
 
-  <div class="seq-diagram-wrap" role="img" aria-label="序列圖：USB搖桿 HID T0 至 mavlink-router（板端 MAVLink 轉發／搖桿注入程序）T1 至 eth0 UDP 至 FC；遙測經 router 回 QGC HUD">
-    <svg viewBox="0 0 660 320" xmlns="http://www.w3.org/2000/svg" font-family="Noto Sans TC, Microsoft JhengHei, Segoe UI, sans-serif">
+  <div class="seq-diagram-wrap" role="img" aria-label="序列圖：USB搖桿 HID T0 至 mavlink-router（板端 MAVLink 轉發／搖桿注入程序）T1 至 eth0 UDP 至 FC；遙測經 router 回 QGC HUD；圖傳測試使用外接 USB Webcam，經獨立圖傳裝置與 eth0 回 QGC">
+    <svg viewBox="0 0 660 340" xmlns="http://www.w3.org/2000/svg" font-family="Noto Sans TC, Microsoft JhengHei, Segoe UI, sans-serif">
       <defs>
         <marker id="m-down" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-          <polygon points="0 0, 8 3, 0 6" fill="#b45309"/>
+          <polygon points="0 0, 8 3, 0 6" fill="#d97706"/>
         </marker>
         <marker id="m-d2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-          <polygon points="0 0, 8 3, 0 6" fill="#b45309"/>
+          <polygon points="0 0, 8 3, 0 6" fill="#d97706"/>
         </marker>
         <marker id="m-up" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-          <polygon points="0 0, 8 3, 0 6" fill="#0369a1"/>
+          <polygon points="0 0, 8 3, 0 6" fill="#0f766e"/>
         </marker>
         <marker id="m-gray" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-          <polygon points="0 0, 8 3, 0 6" fill="#b45309"/>
+          <polygon points="0 0, 8 3, 0 6" fill="#d97706"/>
         </marker>
         <marker id="m-up-l" markerWidth="8" markerHeight="6" refX="1" refY="3" orient="auto">
-          <polygon points="8 0, 0 3, 8 6" fill="#0369a1"/>
+          <polygon points="8 0, 0 3, 8 6" fill="#0f766e"/>
+        </marker>
+        <marker id="m-video" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#7c3aed"/>
         </marker>
       </defs>
 
       <!-- domain bands -->
       <rect x="0" y="52" width="660" height="108" fill="#eff6ff" opacity="0.55"/>
       <rect x="0" y="160" width="660" height="88" fill="#ecfdf5" opacity="0.55"/>
-      <rect x="0" y="248" width="660" height="52" fill="#eff6ff" opacity="0.55"/>
+      <rect x="0" y="248" width="660" height="72" fill="#eff6ff" opacity="0.55"/>
 
       <!-- lifelines x: 60, 195, 330, 465, 600 -->
       <rect x="10" y="8" width="100" height="36" rx="6" fill="#fff" stroke="#b45309" stroke-width="1.5"/>
@@ -639,94 +659,101 @@
       <text x="330" y="26" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a">mavlink-router</text>
       <text x="330" y="38" text-anchor="middle" font-size="7.2" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" fill="#64748b">:14550 · 轉發／注入</text>
 
-      <rect x="415" y="8" width="100" height="36" rx="6" fill="#fff" stroke="#2563eb" stroke-width="1.5"/>
-      <text x="465" y="26" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a">eth0</text>
-      <text x="465" y="38" text-anchor="middle" font-size="8" font-family="Consolas,monospace" fill="#64748b">UDP</text>
+      <rect x="415" y="8" width="100" height="36" rx="6" fill="#fff" stroke="#059669" stroke-width="1.5"/>
+      <text x="465" y="30" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a">FC 飛控</text>
 
-      <rect x="550" y="8" width="100" height="36" rx="6" fill="#fff" stroke="#059669" stroke-width="1.5"/>
-      <text x="600" y="30" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a">FC 飛控</text>
+      <rect x="550" y="8" width="100" height="36" rx="6" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
+      <text x="600" y="26" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a">圖傳裝置</text>
+      <text x="600" y="38" text-anchor="middle" font-size="8" fill="#475569">USB Webcam</text>
 
-      <line x1="60" y1="44" x2="60" y2="300" stroke="#b45309" stroke-width="2" stroke-dasharray="5 4"/>
-      <line x1="195" y1="44" x2="195" y2="300" stroke="#2563eb" stroke-width="2" stroke-dasharray="5 4"/>
-      <line x1="330" y1="44" x2="330" y2="300" stroke="#2563eb" stroke-width="2" stroke-dasharray="5 4"/>
-      <line x1="465" y1="44" x2="465" y2="300" stroke="#2563eb" stroke-width="2" stroke-dasharray="5 4"/>
-      <line x1="600" y1="44" x2="600" y2="300" stroke="#059669" stroke-width="2" stroke-dasharray="5 4"/>
+      <line x1="60" y1="44" x2="60" y2="320" stroke="#b45309" stroke-width="2" stroke-dasharray="5 4"/>
+      <line x1="195" y1="44" x2="195" y2="320" stroke="#2563eb" stroke-width="2" stroke-dasharray="5 4"/>
+      <line x1="330" y1="44" x2="330" y2="320" stroke="#2563eb" stroke-width="2" stroke-dasharray="5 4"/>
+      <line x1="465" y1="44" x2="465" y2="320" stroke="#059669" stroke-width="2" stroke-dasharray="5 4"/>
+      <line x1="600" y1="44" x2="600" y2="320" stroke="#7c3aed" stroke-width="2" stroke-dasharray="5 4"/>
 
       <!-- 1: QGC app command → mux -->
-      <line x1="195" y1="68" x2="224" y2="68" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4 3"/>
-      <line x1="296" y1="68" x2="324" y2="68" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#m-gray)"/>
-      <rect x="224" y="54" width="72" height="16" rx="3" fill="#fffbeb" stroke="#fcd34d"/>
-      <text x="260" y="66" text-anchor="middle" font-size="7.5" font-weight="600" fill="#92400e">Arm/Takeoff</text>
+      <line x1="195" y1="68" x2="459" y2="68" stroke="#d97706" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#m-gray)"/>
+      <rect x="260" y="54" width="100" height="16" rx="3" fill="#fff7ed" stroke="#fdba74"/>
+      <text x="310" y="66" text-anchor="middle" font-size="7.5" font-weight="600" fill="#c2410c">Arm/Takeoff · T1→T3</text>
 
       <!-- 2: HID 搖桿 → mux -->
-      <line x1="60" y1="100" x2="155" y2="100" stroke="#b45309" stroke-width="2"/>
-      <line x1="229" y1="100" x2="324" y2="100" stroke="#b45309" stroke-width="2" marker-end="url(#m-down)"/>
-      <rect x="155" y="86" width="74" height="16" rx="3" fill="#fffbeb" stroke="#fcd34d"/>
-      <text x="192" y="98" text-anchor="middle" font-size="9" font-weight="600" fill="#92400e">HID</text>
+      <line x1="60" y1="100" x2="155" y2="100" stroke="#d97706" stroke-width="2"/>
+      <line x1="229" y1="100" x2="324" y2="100" stroke="#d97706" stroke-width="2" marker-end="url(#m-down)"/>
+      <rect x="155" y="86" width="74" height="16" rx="3" fill="#fff7ed" stroke="#fdba74"/>
+      <text x="192" y="98" text-anchor="middle" font-size="9" font-weight="600" fill="#c2410c">HID</text>
 
-      <!-- 3: mux inject MC/RC → eth0 -->
-      <line x1="330" y1="128" x2="360" y2="128" stroke="#b45309" stroke-width="2"/>
-      <line x1="440" y1="128" x2="459" y2="128" stroke="#b45309" stroke-width="2" marker-end="url(#m-down)"/>
-      <rect x="360" y="114" width="80" height="16" rx="3" fill="#fffbeb" stroke="#fcd34d"/>
-      <text x="400" y="126" text-anchor="middle" font-size="7.5" font-weight="600" fill="#92400e">RC/MC inject</text>
+      <!-- 3: control down mux → FC over physical Ethernet -->
+      <line x1="330" y1="144" x2="459" y2="144" stroke="#d97706" stroke-width="2" marker-end="url(#m-down)"/>
+      <rect x="350" y="130" width="96" height="16" rx="3" fill="#fff7ed" stroke="#fdba74"/>
+      <text x="398" y="142" text-anchor="middle" font-size="7.5" font-weight="600" fill="#c2410c">RC/MC＋UDP · ETH</text>
 
-      <!-- 4: UDP down eth0 → FC -->
-      <line x1="465" y1="160" x2="498" y2="160" stroke="#b45309" stroke-width="2"/>
-      <line x1="562" y1="160" x2="594" y2="160" stroke="#b45309" stroke-width="2" marker-end="url(#m-d2)"/>
-      <rect x="498" y="146" width="64" height="16" rx="3" fill="#fffbeb" stroke="#fcd34d"/>
-      <text x="530" y="158" text-anchor="middle" font-size="9" font-weight="600" fill="#92400e">UDP 下行</text>
+      <!-- 4: ATTITUDE FC → mux over physical Ethernet -->
+      <line x1="465" y1="188" x2="330" y2="188" stroke="#0f766e" stroke-width="2" marker-end="url(#m-up)"/>
+      <rect x="350" y="174" width="96" height="16" rx="3" fill="#f0fdfa" stroke="#5eead4"/>
+      <text x="398" y="186" text-anchor="middle" font-size="7.5" font-weight="600" fill="#0f766e">姿態遙測 · ETH</text>
 
-      <!-- 5: ATTITUDE FC → eth0 -->
-      <line x1="600" y1="196" x2="548" y2="196" stroke="#0369a1" stroke-width="2"/>
-      <line x1="500" y1="196" x2="471" y2="196" stroke="#0369a1" stroke-width="2" marker-end="url(#m-up)"/>
-      <rect x="500" y="182" width="48" height="16" rx="3" fill="#e0f2fe" stroke="#7dd3fc"/>
-      <text x="524" y="194" text-anchor="middle" font-size="7.5" font-weight="600" fill="#0369a1">ATTITUDE</text>
+      <!-- 5: telemetry mux → QGC over physical Ethernet -->
+      <line x1="330" y1="224" x2="201" y2="224" stroke="#0f766e" stroke-width="1.8" marker-end="url(#m-up)"/>
+      <rect x="232" y="210" width="96" height="16" rx="3" fill="#f0fdfa" stroke="#5eead4"/>
+      <text x="280" y="222" text-anchor="middle" font-size="8" font-weight="600" fill="#0f766e">遙測上行 · 本機 UDP</text>
 
-      <!-- 6: UDP up eth0 → mux → QGC -->
-      <line x1="465" y1="232" x2="344" y2="232" stroke="#0369a1" stroke-width="1.8"/>
-      <line x1="272" y1="232" x2="201" y2="232" stroke="#0369a1" stroke-width="1.8" marker-end="url(#m-up)"/>
-      <rect x="272" y="218" width="72" height="16" rx="3" fill="#e0f2fe" stroke="#7dd3fc"/>
-      <text x="308" y="230" text-anchor="middle" font-size="8" font-weight="600" fill="#0369a1">經 router 上行</text>
+      <!-- 6: independent video path, T4 video device → QGC -->
+      <line x1="600" y1="296" x2="201" y2="296" stroke="#7c3aed" stroke-width="2" marker-end="url(#m-video)"/>
+      <rect x="390" y="282" width="140" height="16" rx="3" fill="#f5f3ff" stroke="#c4b5fd"/>
+      <text x="460" y="294" text-anchor="middle" font-size="7.5" font-weight="600" fill="#6d28d9">圖傳上行（T4 → QGC）</text>
 
-      <!-- 7: HUD self-loop (T3') on QGC -->
-      <path d="M 195 276 C 135 276, 135 298, 195 298" fill="none" stroke="#0369a1" stroke-width="2" marker-end="url(#m-up-l)"/>
-      <rect x="93" y="256" width="132" height="16" rx="3" fill="#e0f2fe" stroke="#7dd3fc"/>
-      <text x="159" y="268" text-anchor="middle" font-size="7.5" font-weight="600" fill="#0369a1">HUD / 地圖軌跡</text>
+      <!-- 8: HUD self-loop (T3') on QGC -->
+      <path d="M 195 260 C 135 260, 135 282, 195 282" fill="none" stroke="#0f766e" stroke-width="2" marker-end="url(#m-up-l)"/>
+      <rect x="93" y="240" width="132" height="16" rx="3" fill="#f0fdfa" stroke="#5eead4"/>
+      <text x="159" y="252" text-anchor="middle" font-size="7.5" font-weight="600" fill="#0f766e">HUD / 地圖軌跡</text>
     </svg>
-    <div class="seq-diagram-caption">咖啡：下行／控制 · 藍：上行／遙測</div>
+    <div class="seq-diagram-caption">咖啡：下行／控制 · 藍：上行／遙測 · 紫：圖傳</div>
   </div>
-
+  <div class="flow-total">
+    <span class="label">本案操控延遲（實測：搖桿 → 飛控）</span>
+    <span class="value">9.50 ms</span>
+  </div>
   <table class="data compact p1-summary">
     <tr><th>事件</th><th>區間</th><th>方向</th><th>段落</th><th>量測方式／指標</th><th>平均延遲</th></tr>
     <tr class="flow-down">
-      <td class="flow-event">Arm/Takeoff</td><td class="flow-range">T0 → T1</td><td>下行</td><td>QGC → mavlink-router</td><td>看 QGC 發出指令，到 router 記錄收到</td>
-      <td class="tbd">—</td>
+      <td class="flow-event">Arm/Takeoff</td><td class="flow-range">T1 → T3</td><td>下行</td><td>QGC → mavlink-router → FC</td><td>看 QGC command 到 router，再轉送 FC<br>generic cmd n=32；Arm/Takeoff 未捕捉</td>
+      <td class="mono">Non</td>
     </tr>
     <tr class="flow-down">
-      <td class="flow-event">HID</td><td class="flow-range">T0 → T1</td><td>下行</td><td>USB 搖桿 → mavlink-router</td><td>看搖桿動作，到 router 送出指令<br>L_cmd 重測 n=846</td>
-      <td class="mono">10.8 ms</td>
+      <td class="flow-event">HID</td><td class="flow-range">T0 → T2</td><td>下行</td><td>USB 搖桿 → mavlink-router</td><td>200 Hz 實測 HID → router 平均 3.01 ms；n=35</td>
+      <td class="mono">3.01 ms</td>
     </tr>
     <tr class="flow-down">
-      <td class="flow-event">RC/MC inject</td><td class="flow-range">T1 → T2</td><td>下行</td><td>mavlink-router → eth0</td><td>比對 router 送出，到 eth0 封包出去<br>L_cmd_eth</td>
-      <td class="tbd">—</td>
-    </tr>
-    <tr class="flow-down">
-      <td class="flow-event">UDP 下行</td><td class="flow-range">T2 → T3</td><td>下行</td><td>eth0 → FC 飛控</td><td>比對 eth0 封包出去，到 FC 收到</td>
-      <td class="tbd">—</td>
+      <td class="flow-event">遙控訊息注入（RC／MC）</td><td class="flow-range">T2 → T3</td><td>下行</td><td>mavlink-router → FC（實體網路線 ETH）</td><td>ETH pcap 觀察 MANUAL_CONTROL 輸出封包間隔；平均 6.49 ms；不是 FC 接收延遲</td>
+      <td class="mono">6.49 ms*</td>
     </tr>
     <tr class="flow-up">
-      <td class="flow-event">ATTITUDE</td><td class="flow-range">T3 → T2</td><td>上行</td><td>FC 飛控 → eth0</td><td>比對 FC 送出 ATTITUDE，到 eth0 收到<br>L_telem_eth</td>
-      <td class="tbd">—</td>
+      <td class="flow-event">飛行姿態遙測（MAVLink ATTITUDE）</td><td class="flow-range">T3 → T2</td><td>上行</td><td>FC 飛控 → mavlink-router（實體網路線 ETH）</td><td>200 Hz ETH pcap 可見 ATTITUDE 644 筆；封包間隔平均 100.00 ms；此為遙測週期，不是控制延遲</td>
+      <td class="mono">100.00 ms*</td>
     </tr>
     <tr class="flow-up">
-      <td class="flow-event">經 router 上行</td><td class="flow-range">T2 → T1</td><td>上行</td><td>eth0 → QGC</td><td>比對 eth0 收到，到 QGC 收到</td>
-      <td class="tbd">—</td>
+      <td class="flow-event">經 router 上行</td><td class="flow-range">T2 → T1</td><td>上行</td><td>mavlink-router → QGC（本機 UDP）</td><td>目前未加 QGC receive probe；僅可確認 router 有轉發 FC telemetry</td>
+      <td class="tbd">未直測</td>
     </tr>
     <tr class="flow-up">
-      <td class="flow-event">HUD / 地圖軌跡</td><td class="flow-range">T1 → T1</td><td>上行</td><td>QGC 本機顯示</td><td>比對 QGC 收到，到畫面更新<br>L_telem_qgc</td>
-      <td class="tbd">—</td>
+      <td class="flow-event">HUD / 地圖軌跡</td><td class="flow-range">T1 → T1</td><td>上行</td><td>QGC 本機顯示</td><td>比對 QGC 收到，到畫面更新<br>需要 QGC callback / render probe</td>
+      <td class="tbd">未直測</td>
+    </tr>
+    <tr class="flow-up">
+      <td class="flow-event">圖傳上行</td><td class="flow-range">T4 → T1</td><td>上行</td><td>外接 USB Webcam → 圖傳裝置 → QGC</td><td>影像由獨立圖傳裝置直接傳至 QGC；不經 FC，本案目前未加入 video receive／render probe</td>
+      <td class="tbd">Non</td>
     </tr>
   </table>
+  <div class="ref-local-note">
+    <strong>* 時間註記：</strong>Arm/Takeoff 欄位使用 generic QGC command forwarding 補測，未捕捉到實際 Arm `cmd=400` 或 Takeoff `cmd=22`；
+    200 Hz 遙控訊息注入的 6.49 ms 是 ETH 可見 MANUAL_CONTROL 封包間隔平均值；此數值不是 FC 接收延遲。
+    這些數字可作為鏈路參考，不是嚴格的 FC receive/control-loop 單向延遲。
+  </div>
+
+  <div class="ref-local-note">
+    200 Hz 本案參考：HID→mux 平均 3.01 ms，加上 mux→FC 的 MANUAL_CONTROL 封包間隔平均 6.49 ms，合計平均 9.50 ms。此合計值為參考值，不是同步的 FC 接收端到端量測。
+  </div>
 
   <footer class="page-footer">
     <span>整體資料流 · Baseline-Mux-Eth-HTL · P2 總圖 → P3 Now／Target</span>
@@ -787,90 +814,199 @@
     主表先呈現遙控器鏈路；地面站表補充公開產品與方法參考。
   </div>
   <h3 class="ref-group-title rc">遙控器 → 無人機</h3>
-  <div class="ref-local-note">
-    <strong>本案局部量測：</strong>USB 搖桿 → mavlink-router，平均 10.8 ms（n=846）；尚未包含 eth0 → FC 飛控。
-    <a href="../../test/evidence/mux-path/dense-n1000/latency-mux-n1000-20260731-180536/summary.md">本報告證據</a>
-  </div>
+  <div class="ref-local-note">產品排序：國內廠商 → 國外廠商。</div>
   <table class="data ref compact">
     <tr>
       <th>類別</th>
       <th>路徑</th>
-      <th>延遲資訊</th>
+      <th>操控延遲（ms）／圖傳延遲（ms）</th>
       <th>用途</th>
       <th>來源</th>
     </tr>
-    <tr class="ref-rc">
-      <td>ExpressLRS</td>
-      <td>遙控器搖桿 → 飛控</td>
-      <td class="mono">典型 4–10 ms</td>
-      <td>封包率依設定變化</td>
-      <td class="source"><a href="https://blog.wildair.ch/drone-rc-protocols/">公開整理</a></td>
-    </tr>
-    <tr class="ref-rc">
-      <td>GHST（Ghost）</td>
-      <td>遙控器 → 飛控</td>
-      <td class="mono">典型 7–12 ms</td>
-      <td>封包率依設定變化</td>
-      <td class="source"><a href="https://blog.wildair.ch/drone-rc-protocols/">公開整理</a></td>
-    </tr>
-    <tr class="ref-rc">
-      <td>CRSF（Crossfire）</td>
-      <td>遙控器 → 飛控</td>
-      <td class="mono">典型 10–15 ms</td>
-      <td>封包率依設定變化</td>
-      <td class="source"><a href="https://blog.wildair.ch/drone-rc-protocols/">公開整理</a></td>
-    </tr>
-    <tr class="ref-rc">
-      <td>ELRS／CF 長距 50 Hz</td>
-      <td>遙控器 → 飛控</td>
-      <td class="mono">未提供固定值</td>
-      <td>封包率與通訊距離取捨</td>
-      <td class="source"><a href="https://blog.wildair.ch/drone-rc-protocols/">公開整理</a></td>
+    <tr class="ref-mux">
+      <td>本案量測</td>
+      <td>搖桿 → 飛控</td>
+      <td class="mono">9.50 ms / Non</td>
+      <td>鏈路參考值，非 FC 內部控制迴圈延遲</td>
+      <td class="source"><a href="../../test/evidence/all-flow-20260803-101733/summary-pcap.md">本案證據</a></td>
     </tr>
   </table>
-  <h3 class="ref-group-title gcs">地面站 → 無人機（產品與方法補充）</h3>
   <table class="data ref compact">
     <tr>
       <th>類別</th>
       <th>路徑</th>
-      <th>延遲資訊</th>
+      <th>操控頻率（Hz）／圖傳延遲（ms）</th>
+      <th>用途</th>
+      <th>來源</th>
+    </tr>
+    <tr class="ref-rc ref-tw">
+      <td>UIR Remote Controller</td>
+      <td>專業遙控器 → MAVLink／Telemetry → 飛控</td>
+      <td class="mono">Non / Non</td>
+      <td>7 吋 Android 專業遙控器；QGC 相容；Ethernet／USB-C；450MHz／2.3GHz 長距鏈路</td>
+      <td class="source"><a href="../../../20260708_Accton_Pro_RC_Product_Dev/docs/originals/UIR%20QSG%2020260116-2.pdf">QSG PDF</a></td>
+    </tr>
+    <tr class="ref-rc ref-tw">
+      <td>HY Tech SKYLINK 3</td>
+      <td>專業遙控器／地面站 → 無人機</td>
+      <td class="mono">Non / Non</td>
+      <td>數圖控合一；16 控制通道；1080P 影像鏈路</td>
+      <td class="source"><a href="https://www.uashytech.com/skylink-3">產品頁</a></td>
+    </tr>
+    <tr class="ref-rc ref-tw">
+      <td>ALIFECOM 8” Controller Pro</td>
+      <td>專業遙控器 → 無人系統</td>
+      <td class="mono">Non / Non</td>
+      <td>8 吋戰術控制器；joysticks／buttons／sliders；IP65</td>
+      <td class="source"><a href="https://www.tadte.com.tw/en/product/A35C78EA23E40D1B37C638213D6EBAF8CC29B1D3736BAC9A/info.html">產品頁</a></td>
+    </tr>
+    <tr class="ref-rc">
+      <td>SIYI UniRC 7／7 Pro</td>
+      <td>專業手持地面站 → UAV／UGV／USV</td>
+      <td class="mono">Non / 170 ms</td>
+      <td>2.4／5 GHz 雙頻；4K30 或雙路 1080P60；40 km；MAVLink／ArduPilot／PX4 整合</td>
+      <td class="source"><a href="https://www.siyi.biz/en/product/hand-gcs/unirc7-pro/">官方產品頁</a></td>
+    </tr>
+    <tr class="ref-rc">
+      <td>CubePilot Herelink 1.1</td>
+      <td>專業遙控器／GCS → ArduPilot／PX4</td>
+      <td class="mono">Non / Non</td>
+      <td>整合遙控、HD 影像、Telemetry；支援 MAVLink；標示最遠 20 km</td>
+      <td class="source"><a href="https://github.com/CubePilot/cubepilot-docs/blob/master/herelink/herelink-overview.md">官方文件</a></td>
+    </tr>
+    <tr class="ref-rc">
+      <td>Estone GCS-50</td>
+      <td>通用手持控制器 → MAVLink UAV／UGV</td>
+      <td class="mono">Non / Non</td>
+      <td>5.5 吋；支援 QGroundControl／Mission Planner；IP54；MIL-STD-810H</td>
+      <td class="source"><a href="https://www.estonetech.com/products/rugged/portable-ground-control-station/gcs-50.html">產品頁</a></td>
+    </tr>
+    <tr class="ref-rc">
+      <td>Auterion Skynav</td>
+      <td>專業手持控制器 → MAVLink UAV</td>
+      <td class="mono">Non / Non</td>
+      <td>支援 Auterion PX4／MAVLink；IP65；MIL-STD-810G；可搭配 QGC SRR</td>
+      <td class="source"><a href="https://docs.auterion.com/vehicle-operation/remote-controllers/skynav">官方文件</a></td>
+    </tr>
+    <tr class="ref-rc">
+      <td>Harris Aerial NEXUS</td>
+      <td>企業級手持 GCS → Harris Aerial UAV</td>
+      <td class="mono">Non / Non</td>
+      <td>7 吋 2000 nit；Android 14；雙搖桿；IP55；NDAA-compliant radio</td>
+      <td class="source"><a href="https://harrisaerial.com/ground-control/nexus/">產品頁</a></td>
+    </tr>
+    <tr class="ref-rc">
+      <td>DJI RC Pro</td>
+      <td>專業遙控器 → DJI UAV</td>
+      <td class="mono">Non / 120 ms</td>
+      <td>5.5 吋高亮度螢幕；支援 DJI O3+；搭配指定 DJI 航空器</td>
+      <td class="source"><a href="https://www.dji.com/rc-pro">官方產品頁</a></td>
+    </tr>
+    <tr class="ref-rc">
+      <td>Autel Smart Controller SE</td>
+      <td>企業級遙控器 → Autel Enterprise UAV</td>
+      <td class="mono">Non / Non</td>
+      <td>6.4 吋 Android 控制器；SkyLink 2.0；支援 EVO II Enterprise／RTK 系列</td>
+      <td class="source"><a href="https://www.autelrobotics.com/productdetail/autel-smart-controller-se">產品頁</a></td>
+    </tr>
+    <tr class="ref-rc">
+      <td>Parrot Skycontroller 4</td>
+      <td>專業遙控器 → Parrot ANAFI Ai／USA</td>
+      <td class="mono">Non / Non</td>
+      <td>Parrot 專用控制器；支援 ANAFI Ai／USA 系列</td>
+      <td class="source"><a href="https://www.parrot.com/assets/s3fs-public/2022-07/ANAFI%20Ai%20USER%20GUIDE%20v.7.3.0.0_0.pdf">官方指南</a></td>
+    </tr>
+  </table>
+  <div class="ref-local-note">
+    <strong>產品參考註記：</strong>上述欄位改列公開的操控頻率與圖傳延遲；未公開者不自行換算或推估。
+    Herelink、Estone GCS-50、Auterion Skynav 為 MAVLink／通用 GCS 方向，其餘多為廠商專用生態系，不能直接視為本案 MAVLink 鏈路的同等產品。
+  </div>
+  <h3 class="ref-group-title gcs">地面站 → 無人機（產品與方法補充）</h3>
+  <div class="ref-local-note">產品排序：國內廠商 → 國外廠商；方法與本案量測列於產品之後。</div>
+  <table class="data ref compact">
+    <tr>
+      <th>類別</th>
+      <th>路徑</th>
+      <th>操控頻率（Hz）／圖傳延遲（ms）</th>
       <th>用途</th>
       <th>來源</th>
     </tr>
     <tr class="ref-gcs ref-tw">
-      <td>中科院無人機地面導控站</td>
-      <td>操作員 → 地面導控站 → 微波通信 → 無人機</td>
-      <td class="mono">未公開</td>
-      <td>即時操控、遙測與任務指揮</td>
-      <td class="source"><a href="https://www.ncsist.org.tw/csistdup/products/product.aspx?catalog=26&amp;product_Id=235">中科院</a></td>
+      <td>HY Tech SKYLINK 3</td>
+      <td>遙控器／地面站 → 無人機</td>
+      <td class="mono">Non / Non</td>
+      <td>數圖控合一；16 控制通道；1080P 影像鏈路</td>
+      <td class="source"><a href="https://www.uashytech.com/skylink-3">產品頁</a></td>
+    </tr>
+    <tr class="ref-gcs ref-tw">
+      <td>LongLink ELRS Control Link</td>
+      <td>遙控資料鏈 TX/RX → 飛控</td>
+      <td class="mono">Non / Non</td>
+      <td>2.4GHz／915MHz ELRS 控制鏈路；20–30 km</td>
+      <td class="source"><a href="https://longlinksolutions.com/">產品頁</a></td>
+    </tr>
+    <tr class="ref-gcs ref-tw">
+      <td>ALIFECOM 8” Controller Pro</td>
+      <td>手持控制器 → 無人系統</td>
+      <td class="mono">Non / Non</td>
+      <td>8 吋戰術控制器；joysticks／buttons／sliders；IP65</td>
+      <td class="source"><a href="https://www.tadte.com.tw/en/product/A35C78EA23E40D1B37C638213D6EBAF8CC29B1D3736BAC9A/info.html">產品頁</a></td>
+    </tr>
+    <tr class="ref-gcs ref-tw">
+      <td>本案 Android GCS App 規劃</td>
+      <td>Android GCS → MAVLink UDP → FC</td>
+      <td class="mono">Non / Non</td>
+      <td>USB CDC、MAVLink、DroneState、PFD/HUD、ARM/RTL 確認流程</td>
+      <td class="source"><a href="../../../20260708_Accton_Pro_RC_Product_Dev/docs/originals/drone-gcs-team-plan.pdf">原始 PDF</a></td>
     </tr>
     <tr class="ref-gcs ref-tw">
       <td>TAIWAN UAV／智飛 GCS</td>
       <td>操作員 → GCS → 無人機資料鏈</td>
-      <td class="mono">未公開</td>
-      <td>可攜式 GCS、影像監控</td>
-      <td class="source"><a href="https://www.taiwan-uav.com/en/product/gcs/no.9/ground-control-station-%28gcs%29">TAIWAN UAV</a></td>
+      <td class="mono">Non / Non</td>
+      <td>可攜式 GCS、影像監控、通訊系統客製化</td>
+      <td class="source"><a href="https://www.taiwan-uav.com/en/product/gcs/no.9/ground-control-station-%28gcs%29">產品頁</a></td>
     </tr>
     <tr class="ref-gcs ref-tw">
-      <td>RIVO GCS／RPilot</td>
-      <td>操作員 → RIVO GCS → RPilot 飛控</td>
-      <td class="mono">未公開</td>
-      <td>地面站與飛控整合</td>
-      <td class="source"><a href="https://rivo.com.tw/">RIVO</a></td>
+      <td>中科院無人機地面導控站</td>
+      <td>操作員 → 地面導控站 → 微波通信 → 無人機</td>
+      <td class="mono">Non / Non</td>
+      <td>即時操控、遙測、任務規劃與任務指揮</td>
+      <td class="source"><a href="https://www.ncsist.org.tw/eng/csistdup/products/product.aspx?catalog=11&amp;product_Id=235">產品頁</a></td>
     </tr>
-    <tr class="ref-gcs ref-tw">
-      <td>英諾飛地面導控站</td>
-      <td>操作員 → 地面導控站 → 飛控</td>
-      <td class="mono">未公開</td>
-      <td>遙控器／地面站切換</td>
-      <td class="source"><a href="https://infuav.com/product/">英諾飛</a></td>
+    <tr class="ref-gcs">
+      <td>SIYI UniRC 7／7 Pro</td>
+      <td>專業手持地面站 → UAV／UGV／USV</td>
+      <td class="mono">Non / 170 ms</td>
+      <td>2.4／5 GHz 雙頻；4K30 或雙路 1080P60；MAVLink／ArduPilot／PX4</td>
+      <td class="source"><a href="https://www.siyi.biz/en/product/hand-gcs/unirc7-pro/">官方產品頁</a></td>
     </tr>
-    <tr class="ref-gcs ref-tw">
-      <td>FAST CREATE YUTA</td>
-      <td>操作員 → 手持地面站 → 無人機</td>
-      <td class="mono">未公開</td>
-      <td>影像／數據傳輸一體遙控器</td>
-      <td class="source"><a href="https://www.agag.fast-create.com/%E7%84%A1%E4%BA%BA%E6%A9%9F%E6%93%8D%E4%BD%9C%E5%9C%B0%E9%9D%A2%E7%AB%99-%E9%81%99%E6%8E%A7%E5%99%A8-griound-control-station-radio">FAST CREATE</a></td>
+    <tr class="ref-gcs">
+      <td>CubePilot Herelink 1.1</td>
+      <td>專業遙控器／GCS → ArduPilot／PX4</td>
+      <td class="mono">Non / Non</td>
+      <td>整合遙控、HD 影像、Telemetry；支援 MAVLink；標示最遠 20 km</td>
+      <td class="source"><a href="https://github.com/CubePilot/cubepilot-docs/blob/master/herelink/herelink-overview.md">官方文件</a></td>
+    </tr>
+    <tr class="ref-gcs">
+      <td>Estone GCS-50</td>
+      <td>通用手持控制器 → MAVLink UAV／UGV</td>
+      <td class="mono">Non / Non</td>
+      <td>支援 QGroundControl／Mission Planner；IP54；MIL-STD-810H</td>
+      <td class="source"><a href="https://www.estonetech.com/products/rugged/portable-ground-control-station/gcs-50.html">產品頁</a></td>
+    </tr>
+    <tr class="ref-gcs">
+      <td>Auterion Skynav</td>
+      <td>專業手持控制器 → MAVLink UAV</td>
+      <td class="mono">Non / Non</td>
+      <td>支援 Auterion PX4／MAVLink；IP65；MIL-STD-810G</td>
+      <td class="source"><a href="https://docs.auterion.com/vehicle-operation/remote-controllers/skynav">官方文件</a></td>
+    </tr>
+    <tr class="ref-gcs">
+      <td>Harris Aerial NEXUS</td>
+      <td>企業級手持 GCS → Harris Aerial UAV</td>
+      <td class="mono">Non / Non</td>
+      <td>7 吋 2000 nit；Android 14；雙搖桿；IP55</td>
+      <td class="source"><a href="https://harrisaerial.com/ground-control/nexus/">產品頁</a></td>
     </tr>
     <tr class="ref-gcs">
       <td>Joystick 直控</td>
@@ -972,7 +1108,7 @@
 
   <div class="timing">
     <div class="tcard down">
-      <h3><svg width="18" height="18"><use href="#i-gamepad"/></svg> 下行 · RC/MC inject</h3>
+      <h3><svg width="18" height="18"><use href="#i-gamepad"/></svg> 下行 · 遙控訊息注入（RC／MC）</h3>
       <div class="tflow">
         <div class="tnode"><span class="tn">T0</span><span class="td">HID event</span></div>
         <div class="tdown">↓</div>
@@ -982,7 +1118,7 @@
     <div class="tcard up">
       <h3><svg width="18" height="18"><use href="#i-qgc"/></svg> 上行 · 遙測（經 mux）</h3>
       <div class="tflow">
-        <div class="tnode"><span class="tn">T2'</span><span class="td">eth0 入 ATTITUDE</span></div>
+        <div class="tnode"><span class="tn">T2'</span><span class="td">eth0 收到姿態遙測</span></div>
         <div class="tdown">↓</div>
         <div class="tnode"><span class="tn">T3'</span><span class="td">QGC 畫面更新</span></div>
       </div>
@@ -1002,6 +1138,12 @@
       <td>dense 重測 2026-07-31 18:05（mean 10.8）</td>
       <td class="mono">5.1</td><td class="mono">40.9</td>
       <td><span class="badge pass">n=846</span></td>
+    </tr>
+    <tr>
+      <td class="mono">L_cmd</td>
+      <td>all-flow 補測 2026-08-03，HID ABS_Y → mux MC x</td>
+      <td class="mono">0.78</td><td class="mono">39.65</td>
+      <td><span class="badge pass">n=924</span></td>
     </tr>
     <tr>
       <td class="mono">L_cmd_edge</td>
@@ -1102,7 +1244,7 @@
     <div class="tcard up">
       <h3>上行 · 飛控 → VS680</h3>
       <div class="tflow">
-        <div class="tnode"><span class="tn">T1'</span><span class="td">飛控送 ATTITUDE</span></div>
+        <div class="tnode"><span class="tn">T1'</span><span class="td">飛控送姿態遙測</span></div>
         <div class="tdown">↓</div>
         <div class="tnode"><span class="tn">T2'</span><span class="td">VS680 eth0 收到</span></div>
       </div>
@@ -1126,14 +1268,14 @@
     <tr>
       <td class="mono">L_rtt*</td>
       <td>T2' − T1（通訊來回）</td>
-      <td class="mono">59.3</td><td class="mono">98.4</td>
-      <td><span class="badge pass">含 ATT 週期</span></td>
+      <td class="mono">51.4</td><td class="mono">95.1</td>
+      <td><span class="badge lab">pcap proxy n=1183</span></td>
     </tr>
     <tr>
-      <td class="mono">L_e2e*</td>
-      <td>D1 + D2（搖桿→遙測回）</td>
-      <td class="mono">168.6</td><td class="mono">338.1</td>
-      <td><span class="badge pass">Done</span></td>
+      <td class="mono">L_response_proxy*</td>
+      <td>L_cmd + 下一筆 MAVLink ATTITUDE（非 FC 內部處理延遲）</td>
+      <td class="mono">52.2</td><td class="mono">134.8</td>
+      <td><span class="badge lab">derived proxy</span></td>
     </tr>
   </table>
 
