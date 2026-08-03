@@ -429,10 +429,23 @@
     color: #047857;
   }
   .timeline-axis .timebox.t4 {
-    border-color: #94a3b8;
-    background: #f1f5f9;
-    color: #475569;
+    border-color: #c4b5fd;
+    background: #f5f3ff;
+    color: #6d28d9;
   }
+  .timeline-key {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 12px;
+    margin: 0 0 6px;
+    color: var(--muted);
+    font-size: 7.5pt;
+  }
+  .timeline-key span { white-space: nowrap; }
+  .timeline-key .k0 { color: #b45309; }
+  .timeline-key .k1, .timeline-key .k2 { color: #2563eb; }
+  .timeline-key .k3 { color: #059669; }
+  .timeline-key .k4 { color: #7c3aed; }
   .seq-diagram-wrap {
     margin-bottom: 10px;
     border: 1px solid var(--line);
@@ -617,6 +630,13 @@
     <div class="timebox">T2</div>
     <div class="timebox t3">T3</div>
     <div class="timebox t4">T4</div>
+  </div>
+  <div class="timeline-key" aria-label="T0 到 T4 顏色與節點說明">
+    <span class="k0">T0 橙：USB HID 搖桿</span>
+    <span class="k1">T1 藍：QGC</span>
+    <span class="k2">T2 藍：mavlink-router</span>
+    <span class="k3">T3 綠：FC 飛控</span>
+    <span class="k4">T4 紫：圖傳裝置／USB Webcam</span>
   </div>
 
   <div class="seq-diagram-wrap" role="img" aria-label="序列圖：USB搖桿 HID T0 至 mavlink-router（板端 MAVLink 轉發／搖桿注入程序）T1 至 eth0 UDP 至 FC；遙測經 router 回 QGC HUD；圖傳測試使用外接 USB Webcam，經獨立圖傳裝置與 eth0 回 QGC">
