@@ -736,31 +736,31 @@
   <table class="data compact p1-summary">
     <tr><th>事件</th><th>區間</th><th>方向</th><th>段落</th><th>量測方式／指標</th><th>平均延遲</th></tr>
     <tr class="flow-down">
-      <td class="flow-event">Arm/Takeoff</td><td class="flow-range">T1 → T2 → T3</td><td>下行</td><td>QGC → mavlink-router → FC</td><td>看 QGC command 到 router，再轉送 FC<br>generic cmd n=32；Arm/Takeoff 未捕捉</td>
+      <td class="flow-event">Arm/Takeoff</td><td class="flow-range">T1 → T2 → T3</td><td>下行</td><td>QGC → mavlink-router → FC</td><td>generic cmd n=32；Arm/Takeoff 未捕捉</td>
       <td class="mono">Non</td>
     </tr>
     <tr class="flow-down">
-      <td class="flow-event">HID</td><td class="flow-range">T0 → T2</td><td>下行</td><td>外接 USB HID 搖桿 → VS680 內 mavlink-router</td><td>200 Hz、poll=1 ms 實測 HID → router 平均 2.60 ms；n=37</td>
+      <td class="flow-event">HID</td><td class="flow-range">T0 → T2</td><td>下行</td><td>外接 USB HID 搖桿 → VS680 內 mavlink-router</td><td>200 Hz、poll=1 ms；HID → router 平均 2.60 ms；n=37</td>
       <td class="mono">2.60 ms</td>
     </tr>
     <tr class="flow-down">
-      <td class="flow-event">遙控訊息注入（RC／MC）</td><td class="flow-range">T2 → T3</td><td>下行</td><td>mavlink-router → FC（實體網路線 ETH）</td><td>ETH pcap 觀察 MANUAL_CONTROL 輸出封包間隔；平均 6.49 ms；不是 FC 接收延遲</td>
+      <td class="flow-event">遙控訊息注入（RC／MC）</td><td class="flow-range">T2 → T3</td><td>下行</td><td>mavlink-router → FC（實體網路線 ETH）</td><td>ETH pcap；MANUAL_CONTROL 封包間隔平均 6.49 ms</td>
       <td class="mono">6.49 ms*</td>
     </tr>
     <tr class="flow-up">
-      <td class="flow-event">飛行姿態遙測（MAVLink ATTITUDE）</td><td class="flow-range">T3 → T2</td><td>上行</td><td>FC 飛控 → mavlink-router（實體網路線 ETH）</td><td>200 Hz ETH pcap 可見 ATTITUDE 644 筆；封包間隔平均 100.00 ms；此為遙測週期，不是控制延遲</td>
+      <td class="flow-event">飛行姿態遙測（MAVLink ATTITUDE）</td><td class="flow-range">T3 → T2</td><td>上行</td><td>FC 飛控 → mavlink-router（實體網路線 ETH）</td><td>ETH pcap；ATTITUDE 644 筆；封包間隔平均 100.00 ms</td>
       <td class="mono">100.00 ms*</td>
     </tr>
     <tr class="flow-up">
-      <td class="flow-event">經 router 上行</td><td class="flow-range">T2 → T1</td><td>上行</td><td>mavlink-router → QGC（本機 UDP）</td><td>目前未加 QGC receive probe；僅可確認 router 有轉發 FC telemetry</td>
+      <td class="flow-event">經 router 上行</td><td class="flow-range">T2 → T1</td><td>上行</td><td>mavlink-router → QGC（本機 UDP）</td><td>未加 QGC receive probe；僅確認 router 轉發 telemetry</td>
       <td class="tbd">未直測</td>
     </tr>
     <tr class="flow-up">
-      <td class="flow-event">HUD / 地圖軌跡</td><td class="flow-range">T1 → T1</td><td>上行</td><td>QGC 本機顯示</td><td>比對 QGC 收到，到畫面更新<br>需要 QGC callback / render probe</td>
+      <td class="flow-event">HUD / 地圖軌跡</td><td class="flow-range">T1 → T1</td><td>上行</td><td>QGC 本機顯示</td><td>QGC 收到 → 畫面更新；需 callback / render probe</td>
       <td class="tbd">未直測</td>
     </tr>
     <tr class="flow-up">
-      <td class="flow-event">圖傳上行</td><td class="flow-range">T4 → T1</td><td>上行</td><td>外接 USB Webcam → 圖傳裝置 → QGC</td><td>影像由獨立圖傳裝置直接傳至 QGC；不經 FC，本案目前未加入 video receive／render probe</td>
+      <td class="flow-event">圖傳上行</td><td class="flow-range">T4 → T1</td><td>上行</td><td>外接 USB Webcam → 圖傳裝置 → QGC</td><td>獨立圖傳裝置 → QGC；不經 FC；未加 video probe</td>
       <td class="tbd">Non</td>
     </tr>
   </table>
