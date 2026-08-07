@@ -222,6 +222,49 @@ static void log_mavlink_commands(FILE *fp, const char *tag,
 	}
 }
 
+static void log_attitude_qgc_tx(FILE *fp, const uint8_t *buf, ssize_t len)
+{
+	ssize_t i = 0;
+
+	if (!fp)
+		return;
+	while (i + 10 <= len) {
+		uint8_t plen;
+		uint8_t incompat;
+		ssize_t frame_len;
+		uint32_t msgid;
+		const uint8_t *payload;
+		uint32_t time_boot_ms;
+
+		if (buf[i] != 0xFD) {
+			i++;
+			continue;
+		}
+		plen = buf[i + 1];
+		incompat = buf[i + 2];
+		frame_len = 10 + plen + 2;
+		if (incompat & 0x01)
+			frame_len += 13;
+		if (i + frame_len > len)
+			break;
+		msgid = (uint32_t)buf[i + 7] |
+			((uint32_t)buf[i + 8] << 8) |
+			((uint32_t)buf[i + 9] << 16);
+		payload = &buf[i + 10];
+		if (msgid == 30 && plen >= 4) {
+			time_boot_ms = (uint32_t)payload[0] |
+				((uint32_t)payload[1] << 8) |
+				((uint32_t)payload[2] << 16) |
+				((uint32_t)payload[3] << 24);
+			fprintf(fp,
+				"FC_TX_QGC %.9f msgid=30 time_boot_ms=%u seq=%u sys=%u comp=%u\n",
+				mono_now_s(), time_boot_ms, buf[i + 4], buf[i + 5],
+				buf[i + 6]);
+		}
+		i += frame_len;
+	}
+}
+
 static uint16_t stick_to_pwm(int16_t v)
 {
 	/* v: -1000..1000 -> PWM 1000..2000 */
@@ -341,6 +384,7 @@ int main(int argc, char **argv)
 	int ifd = -1;
 	int raw_x = 128, raw_y = 128, raw_z = 128, raw_rz = 128;
 	uint8_t seq = 0;
+	uint32_t hid_test_seq = 0;
 	struct sockaddr_in fc_peer, qgc_dst;
 	int have_fc = 0;
 	struct timespec t_next, t_stat, t_end, now;
@@ -472,6 +516,19 @@ int main(int argc, char **argv)
 
 			while ((nr = read(ifd, &ev, sizeof(ev))) ==
 			       (ssize_t)sizeof(ev)) {
+				if (ev.type == EV_MSC && ev.code == MSC_SERIAL) {
+					struct timespec hid_now;
+					double tmono;
+
+					hid_test_seq = (uint32_t)ev.value;
+					clock_gettime(CLOCK_MONOTONIC, &hid_now);
+					tmono = (double)hid_now.tv_sec +
+						(double)hid_now.tv_nsec / 1e9;
+					if (lat_fp)
+						fprintf(lat_fp, "HID seq=%u t1=%.9f\n",
+							hid_test_seq, tmono);
+					continue;
+				}
 				if (ev.type != EV_ABS)
 					continue;
 				if (ev.code == ABS_X)
@@ -499,6 +556,7 @@ int main(int argc, char **argv)
 					fc_peer = src;
 					have_fc = 1;
 				}
+				log_attitude_qgc_tx(lat_fp, buf, nr);
 				if (sendto(sock_gcs, buf, (size_t)nr, 0,
 					   (const struct sockaddr *)&qgc_dst,
 					   sizeof(qgc_dst)) > 0)
@@ -572,6 +630,11 @@ int main(int argc, char **argv)
 							"MC %.6f %d %d %d %d\n",
 							tmono, (int)x, (int)y,
 							(int)z, (int)r);
+						if (hid_test_seq)
+							fprintf(lat_fp,
+								"MC_SEQ seq=%u t2=%.9f x=%d y=%d z=%d r=%d\n",
+								hid_test_seq, tmono, (int)x,
+								(int)y, (int)z, (int)r);
 					}
 				}
 				t_next = now;
